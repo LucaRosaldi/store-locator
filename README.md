@@ -51,12 +51,12 @@ Responsive Google Maps Store locator build in [Preact](https://preactjs.com/) an
 
     <script src="store-locator.js"></script>
     <script>
-      var options = {};
+      var config = {};
 
-      options.container = document.getElementById( 'my-store-locator' );
-      options.apiKey = 'GOOGLE_MAPS_API_KEY';
+      config.container = document.getElementById( 'my-store-locator' );
+      config.apiKey = 'GOOGLE_MAPS_API_KEY';
 
-      options.stores: [
+      config.stores: [
         {
           name: 'Coliseum',
           address: 'Piazza del Colosseo, 1, 00184 Roma RM',
@@ -69,7 +69,7 @@ Responsive Google Maps Store locator build in [Preact](https://preactjs.com/) an
         ...
       ];
 
-      storeLocator( options );
+      storeLocator( config );
     </script>
 
 	</body>
@@ -79,7 +79,7 @@ Responsive Google Maps Store locator build in [Preact](https://preactjs.com/) an
 
 
 
-## Options
+## Configuration
 
 The configuration object accepts the following properties.
 
@@ -88,10 +88,9 @@ The configuration object accepts the following properties.
 | `container`             | `null`                                 | *(required)* The DOM element where the map will be rendered. |
 | `stores`                | `[]`                                   | *(required)* List of store objects (see chapter "Store").    |
 | `i18n`                  | `{}`                                   | Collection of strings for internationalization (see chapter "Internationalization"). |
-| `fullwidth`             | `false`                                | Make the map expand to the full width of the container on large screens, and show the store list as an overlay. |
 | `center`                | `{ lat: 41.9102415, lng: 12.3959168 }` | Initial map center.                                          |
 | `address`               | `''`                                   | Set the address in the search box to use as the initial location. Overrides the `center` prop. |
-| `findUserLocation`      | `true`                                 | Determine the current location of the user. Overrides the `address` prop (if user allows geolocation in her browser). |
+| `findUserLocation`      | `true`                                 | Determine the current location of the user on map initialization (if user allows geolocation in her browser). Overrides the `address` prop. |
 | `marker`                | `{}`                                   | Custom icon for store markers. Accepts a [`google.maps.MarkerOptions`](https://developers.google.com/maps/documentation/javascript/reference/marker#MarkerOptions) interface object. |
 | `style`                 | `[]`                                   | Map style (see [Google Map Style Wizard](https://mapstyle.withgoogle.com/) or [Snazzy Maps](https://snazzymaps.com/) for styling options). |
 | `unitSystem`            | `'METRIC'`                             | Mode used to calculate the distance between points in the map (`'METRIC'` {Km} or `'IMPERIAL'` {Mi}). |
@@ -104,6 +103,7 @@ The configuration object accepts the following properties.
 | `showTerrainControl`    | `false`                                | Show the terrain type switcher in the map.                   |
 | `showStreetViewControl` | `false`                                | Show the Street View icon in the map.                        |
 | `showFullscreenControl` | `false`                                | Show the Fullscreen icon in the map.                         |
+| `fullwidth`             | `false`                                | Make the map expand to the full width of the container on large screens, and show the store list as an overlay. |
 
 
 

@@ -33,16 +33,18 @@
     <script src="store-locator.js"></script>
 
     <script>
+    (function(){
+
       /**
        * Sample Store Locator. For the full list of options, please see the README
        * or the commented documentation in store-locator.js source file.
        */
-      var options = {};
+      var config = {};
 
-      options.container = document.querySelector( '[data-store-locator]' );
-      options.apiKey = 'AIzaSyAFmWe5d71dl6aYeIjX63V2iIM_eOkCBKA';
+      config.container = document.querySelector( '[data-store-locator]' );
+      config.apiKey = 'AIzaSyAFmWe5d71dl6aYeIjX63V2iIM_eOkCBKA';
 
-      options.stores = [
+      config.stores = [
         {
           name: 'Colosseo',
           address: 'Piazza del Colosseo, 1, 00184 Roma RM',
@@ -89,8 +91,9 @@
         }
       ];
 
-      storeLocator( options );
+      storeLocator( config );
 
+    })();
     </script>
 
   </body>

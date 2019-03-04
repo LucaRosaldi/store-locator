@@ -33,25 +33,27 @@
     <script src="../dist/store-locator.js"></script>
 
     <script>
+    (function(){
+
       /**
        * Sample Store Locator. For the full list of options, please see the README
        * or the commented documentation in store-locator.js source file.
        */
-      var options = {};
+      var config = {};
 
-      options.container = document.querySelector( '[data-store-locator]' );
-      options.apiKey = 'AIzaSyAFmWe5d71dl6aYeIjX63V2iIM_eOkCBKA';
+      config.container = document.querySelector( '[data-store-locator]' );
+      config.apiKey = 'AIzaSyAFmWe5d71dl6aYeIjX63V2iIM_eOkCBKA';
 
       /**
        * DEMO: Center map on Rome and use geolocation.
        */
-      options.address = 'Roma, RM, Italy';
-      options.findUserLocation = true;
+      config.address = 'Roma, RM, Italy';
+      config.findUserLocation = true;
 
       /**
        * DEMO: Language localization (italian).
        */
-      options.i18n = {
+      config.i18n = {
         searchHint: 'Here is a list of the best places to visit in Rome. Be good tourists and respect the city.',
         currentLocation: 'Posizione attuale',
         directions: 'Indicazioni',
@@ -65,7 +67,7 @@
       /**
        * DEMO: POI in Rome, Italy
        */
-      options.stores = [
+      config.stores = [
         {
           name: 'Colosseo',
           address: 'Piazza del Colosseo, 1, 00184 Roma RM',
@@ -121,7 +123,7 @@
       /**
        * DEMO: "even lighter" Google Maps style (https://snazzymaps.com/style/8381/even-lighter)
        */
-      options.style = [
+      config.style = [
         {
           "featureType": "landscape.man_made",
           "elementType": "all",
@@ -211,8 +213,9 @@
         }
       ];
 
-      storeLocator( options );
+      storeLocator( config );
 
+    })();
     </script>
 
   </body>
