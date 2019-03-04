@@ -25,8 +25,8 @@ Responsive Google Maps Store locator build in [Preact](https://preactjs.com/) an
 ## CDN
 
 ```html
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/lucarosaldi/store-locator@1.0.0/dist/store-locator.css">
-<script src="https://cdn.jsdelivr.net/gh/lucarosaldi/store-locator@1.0.0/dist/store-locator.js"></script>
+<link href="https://cdn.jsdelivr.net/gh/lucarosaldi/store-locator/dist/store-locator.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/gh/lucarosaldi/store-locator/dist/store-locator.js"></script>
 ```
 
 
@@ -51,6 +51,8 @@ Responsive Google Maps Store locator build in [Preact](https://preactjs.com/) an
 
     <script src="store-locator.js"></script>
     <script>
+    (function(){
+      
       var config = {};
 
       config.container = document.getElementById( 'my-store-locator' );
@@ -70,6 +72,8 @@ Responsive Google Maps Store locator build in [Preact](https://preactjs.com/) an
       ];
 
       storeLocator( config );
+    
+    })();
     </script>
 
 	</body>
@@ -83,27 +87,27 @@ Responsive Google Maps Store locator build in [Preact](https://preactjs.com/) an
 
 The configuration object accepts the following properties.
 
-| Property                | Default                                | Description                                                  |
-| ----------------------- | -------------------------------------- | ------------------------------------------------------------ |
-| `container`             | `null`                                 | *(required)* The DOM element where the map will be rendered. |
-| `stores`                | `[]`                                   | *(required)* List of store objects (see chapter "Store").    |
-| `i18n`                  | `{}`                                   | Collection of strings for internationalization (see chapter "Internationalization"). |
-| `center`                | `{ lat: 41.9102415, lng: 12.3959168 }` | Initial map center.                                          |
-| `address`               | `''`                                   | Set the address in the search box to use as the initial location. Overrides the `center` prop. |
-| `findUserLocation`      | `true`                                 | Determine the current location of the user on map initialization (if user allows geolocation in her browser). Overrides the `address` prop. |
-| `marker`                | `{}`                                   | Custom icon for store markers. Accepts a [`google.maps.MarkerOptions`](https://developers.google.com/maps/documentation/javascript/reference/marker#MarkerOptions) interface object. |
-| `style`                 | `[]`                                   | Map style (see [Google Map Style Wizard](https://mapstyle.withgoogle.com/) or [Snazzy Maps](https://snazzymaps.com/) for styling options). |
-| `unitSystem`            | `'METRIC'`                             | Mode used to calculate the distance between points in the map (`'METRIC'` {Km} or `'IMPERIAL'` {Mi}). |
-| `travelMode`            | `'DRIVING'`                            | Mode used to calculate the time between points in the map (`'WALKING'` or `'DRIVING'`). |
-| `zoom`                  | `6`                                    | Initial map zoom.                                            |
-| `zoomSelection`         | `17`                                   | Map zoom when a store is selected.                           |
-| `showStoreDistance`     | `true`                                 | Show the distance to each store from the chosen location.    |
-| `nearestStores`         | `6`                                    | Highlight the closest `N` results from the chosen location by lowering the opacity of the farthest stores. |
-| `farStoresOpacity`      | `0.65`                                 | Opacity value for the farthest stores.                       |
-| `showTerrainControl`    | `false`                                | Show the terrain type switcher in the map.                   |
-| `showStreetViewControl` | `false`                                | Show the Street View icon in the map.                        |
-| `showFullscreenControl` | `false`                                | Show the Fullscreen icon in the map.                         |
-| `fullwidth`             | `false`                                | Make the map expand to the full width of the container on large screens, and show the store list as an overlay. |
+| Property                | Default     | Description                                                  |
+| ----------------------- | ----------- | ------------------------------------------------------------ |
+| `container`             | `null`      | *(required)* The DOM element where the map will be rendered. |
+| `stores`                | `[]`        | *(required)* List of store objects (see chapter "Store").    |
+| `center`                | `{}`        | Initial map center ([`LatLngLiteral`](https://developers.google.com/maps/documentation/javascript/reference/coordinates#LatLngLiteral), `{ lat: x, lng: y }`). Not required, but recommended (as default is Italy :–D). |
+| `address`               | `''`        | Set the address in the search box to use as the initial location. Overrides the `center` prop. |
+| `findUserLocation`      | `true`      | Determine the current location of the user on map initialization (if user allows geolocation in her browser). Overrides the `address` prop. |
+| `marker`                | `{}`        | Custom icon for store markers. Accepts a [`google.maps.MarkerOptions`](https://developers.google.com/maps/documentation/javascript/reference/marker#MarkerOptions) interface object. |
+| `style`                 | `[]`        | Map style (see [Google Map Style Wizard](https://mapstyle.withgoogle.com/) or [Snazzy Maps](https://snazzymaps.com/) for styling options). |
+| `unitSystem`            | `'METRIC'`  | Mode used to calculate the distance between points in the map (`'METRIC'` {Km} or `'IMPERIAL'` {Mi}). |
+| `travelMode`            | `'DRIVING'` | Mode used to calculate the time between points in the map (`'WALKING'` or `'DRIVING'`). |
+| `zoom`                  | `6`         | Initial map zoom.                                            |
+| `zoomSelection`         | `17`        | Map zoom when a store is selected.                           |
+| `showStoreDistance`     | `true`      | Show the distance to each store from the chosen location.    |
+| `nearestStores`         | `6`         | Highlight the closest `N` results from the chosen location by lowering the opacity of the farthest stores. |
+| `farStoresOpacity`      | `0.65`      | Opacity value for the farthest stores.                       |
+| `showTerrainControl`    | `false`     | Show the terrain type switcher in the map.                   |
+| `showStreetViewControl` | `false`     | Show the Street View icon in the map.                        |
+| `showFullscreenControl` | `false`     | Show the Fullscreen icon in the map.                         |
+| `fullwidth`             | `false`     | Make the map expand to the full width of the container on large screens, and show the store list as an overlay. |
+| `i18n`                  | `{}`        | Collection of strings for internationalization (see chapter "Internationalization"). |
 
 
 
@@ -115,7 +119,7 @@ Each store object has the following properties:
 | ------------- | ---------- | ------------------------------------------------------------ |
 | `name`        | `{String}` | *(required)* The store name                                  |
 | `address`     | `{String}` | *(required)* The store address                               |
-| `location`    | `{Object}` | *(required)* The store coordinates (location literal: `{ lat: x, lng: y }`) |
+| `location`    | `{Object}` | *(required)* The store coordinates ([`LatLngLiteral`](https://developers.google.com/maps/documentation/javascript/reference/coordinates#LatLngLiteral), `{ lat: x, lng: y }`) |
 | `marker`      | `{Object}` | Custom icon for store markers. Accepts a [`google.maps.MarkerOptions`](https://developers.google.com/maps/documentation/javascript/reference/marker#MarkerOptions) interface object. Overrides the global marker icon if set. |
 | `description` | `{String}` | Description of the store, displayed only in map infowindow (popup) |
 | `phone`       | `{String}` | The phone number of the store                                |
