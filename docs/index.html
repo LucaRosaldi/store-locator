@@ -1,0 +1,219 @@
+<!doctype html>
+<html lang="en">
+
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <title>Store Locator</title>
+
+    <link href="../dist/store-locator.css" rel="stylesheet">
+
+    <style>
+      html, body {
+        margin: 0;
+        height: 100%;
+      }
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Noto Sans", "Fira Sans", "Droid Sans", "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+        font-size: 14px;
+        color: rgba( 0, 0, 0, 0.7 );
+      }
+      [data-store-locator] {
+        height: 100%;
+      }
+    </style>
+
+  </head>
+  <body>
+
+    <div data-store-locator></div>
+
+    <script src="../dist/store-locator.js"></script>
+
+    <script>
+      /**
+       * Sample Store Locator. For the full list of options, please see the README
+       * or the commented documentation in store-locator.js source file.
+       */
+      var options = {};
+
+      options.container = document.querySelector( '[data-store-locator]' );
+      options.apiKey = 'AIzaSyAFmWe5d71dl6aYeIjX63V2iIM_eOkCBKA';
+
+      /**
+       * DEMO: Center map on Rome and use geolocation.
+       */
+      options.address = 'Roma, RM, Italy';
+      options.findUserLocation = true;
+
+      /**
+       * DEMO: Language localization (italian).
+       */
+      options.i18n = {
+        searchHint: 'Here is a list of the best places to visit in Rome. Be good tourists and respect the city.',
+        currentLocation: 'Posizione attuale',
+        directions: 'Indicazioni',
+        call: 'Chiama',
+        website: 'Sito Web',
+        distance: 'distanza: {distance}',
+        byCar: 'in auto',
+        byWalk: 'a piedi'
+      };
+
+      /**
+       * DEMO: POI in Rome, Italy
+       */
+      options.stores = [
+        {
+          name: 'Colosseo',
+          address: 'Piazza del Colosseo, 1, 00184 Roma RM',
+          location: { lat: 41.8902142, lng: 12.4900422 },
+
+          // icons can be customized for a single store, overriding the global marker icon
+          icon: {
+            url: 'http://maps.google.com/mapfiles/ms/icons/blue.png',
+            size: [ 32, 32 ]
+          }
+        },
+        {
+          name: 'Pantheon',
+          description: 'Famous temple dating from 118 to 125 AD with a dome and renaissance tombs, including that of Raphael.',
+          address: 'Piazza della Rotonda, 00186 Roma RM',
+          location: { lat: 41.8986148, lng: 12.4746842 }
+        },
+        {
+          name: 'Basilica di San Pietro',
+          address: "Piazza San Pietro, 00120 Città del Vaticano",
+          location: { lat: 41.9021707, lng: 12.451748 },
+          phone: '+39 06 6982'
+        },
+        {
+          name: "Fontana di Trevi",
+          address: 'Piazza di Trevi, 00187 Roma RM',
+          location: { lat: 41.9010373, lng: 12.4810843 }
+        },
+        {
+          name: 'Foro Romano',
+          address: 'Via della Salara Vecchia, 5/6, 00186 Roma RM',
+          location: { lat: 41.8924663, lng: 12.4831363 },
+          website: 'http://www.turismoroma.it'
+        },
+        {
+          name: 'Musei Vaticani',
+          address: 'Viale Vaticano, 00165 Roma RM',
+          location: { lat: 41.9064918, lng: 12.4514526 }
+        },
+        {
+          name: 'Piazza Navona',
+          address: 'Piazza Navona, 00186 Roma RM',
+          location: { lat: 41.8991673, lng: 12.4708855 }
+        },
+        {
+          name: 'Cappella Sistina',
+          description: 'Famosa cappella all’interno dei Musei Vaticani, famosa per il soffitto dipinto da Michelangelo nel XVI secolo.',
+          address: '00120 Città del Vaticano',
+          location: { lat: 41.9029508, lng: 12.4522948 }
+        }
+      ];
+
+      /**
+       * DEMO: "even lighter" Google Maps style (https://snazzymaps.com/style/8381/even-lighter)
+       */
+      options.style = [
+        {
+          "featureType": "landscape.man_made",
+          "elementType": "all",
+          "stylers": [
+            {
+              "color": "#faf5ed"
+            },
+            {
+              "lightness": "0"
+            },
+            {
+              "gamma": "1"
+            }
+          ]
+        },
+        {
+          "featureType": "poi.park",
+          "elementType": "geometry.fill",
+          "stylers": [
+            {
+              "color": "#bae5a6"
+            }
+          ]
+        },
+        {
+          "featureType": "road",
+          "elementType": "all",
+          "stylers": [
+            {
+              "weight": "1.00"
+            },
+            {
+              "gamma": "1.8"
+            },
+            {
+              "saturation": "0"
+            }
+          ]
+        },
+        {
+          "featureType": "road",
+          "elementType": "geometry.fill",
+          "stylers": [
+            {
+              "hue": "#ffb200"
+            }
+          ]
+        },
+        {
+          "featureType": "road.arterial",
+          "elementType": "geometry.fill",
+          "stylers": [
+            {
+              "lightness": "0"
+            },
+            {
+              "gamma": "1"
+            }
+          ]
+        },
+        {
+          "featureType": "transit.station.airport",
+          "elementType": "all",
+          "stylers": [
+            {
+              "hue": "#b000ff"
+            },
+            {
+              "saturation": "23"
+            },
+            {
+              "lightness": "-4"
+            },
+            {
+              "gamma": "0.80"
+            }
+          ]
+        },
+        {
+          "featureType": "water",
+          "elementType": "all",
+          "stylers": [
+            {
+              "color": "#a0daf2"
+            }
+          ]
+        }
+      ];
+
+      storeLocator( options );
+
+    </script>
+
+  </body>
+</html>

@@ -1,0 +1,222 @@
+/*-----------------------------------------------------------------------------*
+ *  STORE LOCATOR
+ *-----------------------------------------------------------------------------*
+ *
+ *  Responsive Google Maps Store locator build in Preact featuring interactive
+ *  stores list, user geolocation, search box with autocomplete, custom map
+ *  styles, custom markers and internationalization.
+ *
+ *  Forked and improved from https://github.com/microapps/store-locator
+ *
+ *  @author Luca Rosaldi
+ *
+ */
+
+.container {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  overflow: hidden;
+  height: 100%;
+}
+
+.container,
+.infowindow {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Noto Sans", "Fira Sans", "Droid Sans", "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+}
+
+.container * {
+  box-sizing: border-box;
+}
+
+.map {
+  flex: 1;
+  height: 100%;
+  min-height: 300px;
+}
+
+.infowindow {
+  max-width: 200px;
+}
+
+.store_name {
+  margin: 0;
+  font-size: 1em;
+  font-weight: bold;
+}
+
+.store_distance {
+  display: block;
+  height: 1em;
+  margin-top: 0.325rem;
+  font-size: 0.875em;
+  line-height: 1em;
+  opacity: 0.75;
+}
+.container.hidedistance .store_distance {
+  display: none;
+}
+
+.store_address {
+  margin-top: 0.75rem;
+  font-size: 0.9375em;
+  font-style: normal;
+}
+
+.store_description {
+  margin-top: 0.75rem;
+  font-size: 0.875em;
+}
+
+.storeActions {
+  display: inline-block;
+  margin-top: 0.75rem;
+  font-size: 0.875em;
+}
+
+  .storeActions a {
+    display: inline-flex;
+    align-items: center;
+    margin-right: 1rem;
+    text-decoration: none;
+    color: inherit;
+    transition: color 0.2s ease;
+  }
+
+    .store_actions_icon {
+      width: 1.5em;
+      height: 1.5em;
+      margin-right: 0.15rem;
+      background-size: 100% 100%;
+      transition: all 0.2s ease;
+    }
+    .store_actions_directions {
+      background-image: url(https://maps.gstatic.com/mapfiles/maps_lite/images/2x/directions_googblue_24dp.png);
+    }
+    .store_actions_website {
+      background-image: url(https://maps.gstatic.com/mapfiles/maps_lite/images/2x/ic_website_address_24dp.png);
+    }
+    .store_actions_phone {
+      background-image: url(https://maps.gstatic.com/mapfiles/maps_lite/images/2x/phone_googblue_24dp.png);
+    }
+
+.stores {
+  position: relative;
+  width: 100%;
+  min-height: 300px;
+  background: #fff;
+  box-shadow: 0 0 8px rgba( 0, 0, 0, 0.3 );
+}
+
+  .stores_container {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+    max-height: 300px;
+  }
+
+  .stores_search {
+    padding: 1rem;
+    width: 100%;
+    z-index: 2;
+  }
+
+    .stores_input {
+      position: relative;
+      background: #fff;
+      border: 1px solid rgba( 0, 0, 0, 0.12 );
+    }
+
+      .stores_input input {
+        width: 100%;
+        height: 2.5em;
+        padding: 0 2.5em 0 1em;
+
+        font-size: 1em;
+        line-height: 2.5em;
+
+        border: 0;
+        outline: none;
+      }
+
+      .stores_input label {
+        position: absolute;
+        right: 0.3125em;
+        top: 0;
+        bottom: 0;
+        margin: auto;
+        width: 1.5em;
+        height: 1.5em;
+        background-size: 1.5em 1.5em;
+        background-image: url(https://maps.gstatic.com/mapfiles/maps_lite/images/2x/ic_search_black_24dp.png);
+        opacity: 0.38;
+      }
+
+  .stores_hint {
+    padding: 0 1rem 1rem;
+    font-size: 0.875em;
+    opacity: 0.75;
+  }
+
+  .stores_list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+
+    overflow-y: auto;
+
+    -ms-overflow-style: -ms-autohiding-scrollbar;
+    -webkit-overflow-scrolling: touch;
+  }
+  .stores_list::-webkit-scrollbar {
+    width: 6px;
+  }
+  .stores_list::-webkit-scrollbar-thumb {
+    background: rgba( 0, 0, 0, 0.42 );;
+  }
+  .stores_list::-webkit-scrollbar-track {
+    background: rgba( 0, 0, 0, 0.12 );
+  }
+
+    .stores_list li {
+      cursor: pointer;
+      position: relative;
+      padding: 1em;
+      border-top: 1px solid rgba( 0, 0, 0, 0.12 );
+      background: rgba( 0, 0, 0, 0.025 );
+      transition: all 0.2s ease;
+    }
+    .storeselected .stores_list li {
+      background: rgba( 0, 0, 0, 0.04 );
+    }
+    .stores_list li.hiddenStore {
+      opacity: 0.65;
+    }
+    .stores_list li.activeStore {
+      background: transparent;
+    }
+
+@media (min-width: 750px) {
+
+  .container {
+    flex-direction: row;
+  }
+
+    .stores {
+      order: -1;
+      max-width: 350px;
+    }
+    .container.fullwidth .stores {
+      position: absolute;
+      top: 2rem; left: 2rem;
+      bottom: 2rem; right: 2rem;
+    }
+
+      .stores_container {
+        position: absolute;
+        top: 0; left: 0;
+        max-height: none;
+      }
+
+}
