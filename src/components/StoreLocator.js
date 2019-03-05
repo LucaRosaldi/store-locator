@@ -265,7 +265,7 @@ class StoreLocator extends Component {
       this.infoWindow = marker.infoWindow;
       this.infoWindow.open( this.map, marker );
       this.setState( { activeStoreId: store.id } );
-      marker.storeItem.scrollIntoView( false );
+      marker.storeItem.scrollIntoView();
     });
 
     this.markers[ store.id ] = marker;
