@@ -79,8 +79,8 @@ class StoreLocator extends Component {
     zoomSelection: 17,
 
     showStoreDistance: true,
-    nearestStores: 6,
-    farStoresOpacity: 0.65,
+    nearestStores: 1,
+    fartherStoresOpacity: 1.00,
 
     showTerrainControl: false,
     showStreetViewControl: false,
@@ -408,7 +408,7 @@ class StoreLocator extends Component {
    */
   calculateDistanceFrom( location ) {
 
-    const { stores, mapStoreLimit } = this.props;
+    const { stores, nearestStores } = this.props;
     if ( ! location ) return stores;
 
     promiseMap( stores, ( store ) => {
@@ -426,10 +426,10 @@ class StoreLocator extends Component {
       this.clearMarkers();
 
       result = result.map( ( store, i ) => {
-        store.hidden = i + 1 > mapStoreLimit;
+        store.hidden = i + 1 > nearestStores;
         const marker = this.addStoreMarker( store );
         if ( store.hidden ) {
-          marker.setOpacity( this.props.farStoresOpacity );
+          marker.setOpacity( this.props.fartherStoresOpacity );
         } else {
           bounds.extend( store.location );
         }
