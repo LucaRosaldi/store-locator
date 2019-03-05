@@ -43,7 +43,7 @@
 .store_distance {
   display: block;
   height: 1em;
-  margin-top: 0.325rem;
+  margin-top: 0.25rem;
   font-size: 0.875em;
   line-height: 1em;
   opacity: 0.75;
@@ -53,23 +53,23 @@
 }
 
 .store_address {
-  margin-top: 0.75rem;
+  margin-top: 0.5rem;
   font-size: 0.9375em;
   font-style: normal;
 }
 
 .store_description {
-  margin-top: 0.75rem;
+  margin-top: 0.5rem;
   font-size: 0.875em;
 }
 
-.storeActions {
+.store_actions {
   display: inline-block;
-  margin-top: 0.75rem;
+  margin-top: 0.5rem;
   font-size: 0.875em;
 }
 
-  .storeActions a {
+  .store_actions a {
     display: inline-flex;
     align-items: center;
     margin-right: 1rem;
@@ -112,6 +112,8 @@
   }
 
   .stores_search {
+    position: relative;
+    z-index: 2;
     padding: 1rem;
     width: 100%;
     z-index: 2;
@@ -178,18 +180,16 @@
       cursor: pointer;
       position: relative;
       padding: 1em;
-      border-top: 1px solid rgba( 0, 0, 0, 0.12 );
-      background: rgba( 0, 0, 0, 0.025 );
       transition: all 0.2s ease;
     }
     .storeselected .stores_list li {
-      background: rgba( 0, 0, 0, 0.04 );
+      opacity: 0.65;
     }
     .stores_list li.hiddenStore {
       opacity: 0.65;
     }
     .stores_list li.activeStore {
-      background: transparent;
+      opacity: 1;
     }
 
 @media (min-width: 750px) {

@@ -521,7 +521,7 @@ class StoreLocator extends Component {
                       </div>
                     )}
                     <address className={ classNames.store_address }>{ store.address }</address>
-                    <div className={ classNames.storeActions } onClick={ ( e ) => e.stopPropagation() }>
+                    <div className={ classNames.store_actions } onClick={ ( e ) => e.stopPropagation() }>
                       <a target="_blank" href={ `${ this.getDirectionsUrl( searchLocation, store.location ) }` }>
                         <span className={ `${ classNames.store_actions_icon } ${ classNames.store_actions_directions }` }></span>
                         <span>{ this.props.i18n.directions }</span>
