@@ -188,7 +188,6 @@ class StoreLocator extends Component {
         this.calculateDistanceFrom( loc );
 
         this.map.setCenter( loc );
-        this.map.setZoom( this.props.zoom );
         this.setHomeMarker( loc );
       }
     });
@@ -466,7 +465,6 @@ class StoreLocator extends Component {
         this.map.fitBounds( place.geometry.viewport );
       } else {
         this.map.setCenter( place.geometry.location );
-        this.map.setZoom( this.props.zoom );
       }
 
       const location = place.geometry.location.toJSON();
