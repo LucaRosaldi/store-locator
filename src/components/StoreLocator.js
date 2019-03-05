@@ -66,7 +66,7 @@ class StoreLocator extends Component {
       lng: 12.3959168
     },
     address: '',
-    findUserLocation: false,
+    findUserLocation: true,
 
     marker: null,
 
