@@ -458,7 +458,13 @@ class StoreLocator extends Component {
 
       const place = autocomplete.getPlace();
 
-      if ( ! place.geometry ) return;
+      // If the place was not selected with autocomplete, reset the input.
+      if ( ! place.geometry ) {
+        this.input.value = '';
+        return;
+      };
+
+      const location = place.geometry.location.toJSON();
 
       // If the place has a geometry, then present it on a map.
       if ( place.geometry.viewport ) {
@@ -467,10 +473,13 @@ class StoreLocator extends Component {
         this.map.setCenter( place.geometry.location );
       }
 
-      const location = place.geometry.location.toJSON();
+      // If the place is specific (not city or country), calculate the distance.
+      if ( place.types.indexOf( 'political' ) === -1 ) {
+        this.calculateDistanceFrom( location );
+      }
+
       this.setState( { searchLocation: location } );
       this.setHomeMarker( location );
-      this.calculateDistanceFrom( location );
 
     });
   }
