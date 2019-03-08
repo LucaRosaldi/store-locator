@@ -1,6 +1,6 @@
 {
   "name": "store-locator",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Store locator module",
   "main": "dist/store-locator.js",
   "scripts": {
