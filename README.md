@@ -16,7 +16,7 @@ Responsive Google Maps Store locator build in [Preact](https://preactjs.com/) an
 - use browser geolocation to set the current location of the user
 - search box with **address suggestion** dropdown
 - **sort stores from the nearest to the farthest** and show distance (Km or Mi, walking or driving)
-- set **custom markers** (globally or even for a single store)
+- set **custom markers** (globally or even for single stores)
 - set **[custom map styles](https://mapstyle.withgoogle.com/)**
 - fully translatable for **internationalization**
 - fully responsive and easily customizable with CSS
