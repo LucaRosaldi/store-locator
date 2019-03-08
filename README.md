@@ -103,9 +103,8 @@ The configuration object accepts the following properties.
 | `showStoreDistance`     | `true`      | Show the distance to each store from the chosen location.    |
 | `nearestStores`         | `1`         | After searching for a location, resize the map to show the closest `N` results from the location. With the value of `1`, it shows the nearest store. To skip resizing altoghether, set the value to `0`. |
 | `fartherStoresOpacity`  | `1.00`      | Opacity value for the markers of the farthest stores (the ones not included in the value above). This can be lowered to "mute" or hide the stores that are far from the current location. |
+| `showStreetViewControl` | `true`      | Show the Street View icon in the map.                        |
 | `showTerrainControl`    | `false`     | Show the terrain type switcher in the map.                   |
-| `showStreetViewControl` | `false`     | Show the Street View icon in the map.                        |
-| `showFullscreenControl` | `false`     | Show the Fullscreen icon in the map.                         |
 | `fullwidth`             | `false`     | Make the map expand to the full width of the container on large screens, and show the store list as an overlay. |
 | `i18n`                  | `{}`        | Collection of strings for internationalization (see chapter "Internationalization"). |
 

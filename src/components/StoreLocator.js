@@ -82,9 +82,8 @@ class StoreLocator extends Component {
     nearestStores: 1,
     fartherStoresOpacity: 1.00,
 
-    showTerrainControl: false,
-    showStreetViewControl: false,
-    showFullscreenControl: false
+    showStreetViewControl: true,
+    showTerrainControl: false
 
   };
 
@@ -128,7 +127,7 @@ class StoreLocator extends Component {
       styles: this.props.style,
       mapTypeControl: this.props.showTerrainControl,
       streetViewControl: this.props.showStreetViewControl,
-      fullscreenControl: this.props.showFullscreenControl
+      fullscreenControl: false
     });
 
     this.distanceService = new google.maps.DistanceMatrixService();
