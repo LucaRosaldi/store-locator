@@ -67,7 +67,7 @@ export default options => {
                 query: {
                   modules: true,
                   importLoaders: 1,
-                  localIdentName: 'storeLocator-[local]'
+                  localIdentName: '[local]'
                 }
               },
               'postcss-loader'

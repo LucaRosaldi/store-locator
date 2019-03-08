@@ -10,12 +10,13 @@ Responsive Google Maps Store locator build in [Preact](https://preactjs.com/) an
 
 ## Features
 
-- show a interactive sidebar with list of stores
-- show links for each store for directions and optionally for phone and/or website
+- show a interactive sidebar with list of all stores
+- show links in each store for **directions**,  **phone**, **email** and/or **website**
+- show **thumbnails** for each store
 - use browser geolocation to set the current location of the user
 - search box with **address suggestion** dropdown
 - **sort stores from the nearest to the farthest** and show distance (Km or Mi, walking or driving)
-- set **custom markers**, even for a single store
+- set **custom markers** (globally or even for a single store)
 - set **[custom map styles](https://mapstyle.withgoogle.com/)**
 - fully translatable for **internationalization**
 - fully responsive and easily customizable with CSS
@@ -91,6 +92,8 @@ The configuration object accepts the following properties.
 | ----------------------- | ----------- | ------------------------------------------------------------ |
 | `container`             | `null`      | *(required)* The DOM element where the map will be rendered. |
 | `stores`                | `[]`        | *(required)* List of store objects (see chapter "Store").    |
+| `searchHint`            | `''`        | Message to display below the search box.                     |
+| `fullwidth`             | `false`     | Make the map expand to the full width of the container on large screens, and show the store list as an overlay. |
 | `center`                | `{}`        | Initial map center ([`LatLngLiteral`](https://developers.google.com/maps/documentation/javascript/reference/coordinates#LatLngLiteral), `{ lat: x, lng: y }`). Not required, but recommended (as default is Italy :–D). |
 | `address`               | `''`        | Set the address in the search box to use as the initial location. Overrides the `center` prop. |
 | `findUserLocation`      | `true`      | Determine the current location of the user on map initialization (if user allows geolocation in her browser). Overrides the `address` prop. |
@@ -105,7 +108,6 @@ The configuration object accepts the following properties.
 | `fartherStoresOpacity`  | `1.00`      | Opacity value for the markers of the farthest stores (the ones not included in the value above). This can be lowered to "mute" or hide the stores that are far from the current location. |
 | `showStreetViewControl` | `true`      | Show the Street View icon in the map.                        |
 | `showTerrainControl`    | `false`     | Show the terrain type switcher in the map.                   |
-| `fullwidth`             | `false`     | Make the map expand to the full width of the container on large screens, and show the store list as an overlay. |
 | `i18n`                  | `{}`        | Collection of strings for internationalization (see chapter "Internationalization"). |
 
 
@@ -116,13 +118,15 @@ Each store object has the following properties:
 
 | Property      | Type       | Description                                                  |
 | ------------- | ---------- | ------------------------------------------------------------ |
-| `name`        | `{String}` | *(required)* The store name                                  |
-| `address`     | `{String}` | *(required)* The store address                               |
-| `location`    | `{Object}` | *(required)* The store coordinates ([`LatLngLiteral`](https://developers.google.com/maps/documentation/javascript/reference/coordinates#LatLngLiteral), `{ lat: x, lng: y }`) |
+| `name`        | `{String}` | *(required)* The name of the store.                          |
+| `address`     | `{String}` | *(required)* The address of the store.                       |
+| `location`    | `{Object}` | *(required)* The store coordinates ([`LatLngLiteral`](https://developers.google.com/maps/documentation/javascript/reference/coordinates#LatLngLiteral), `{ lat: x, lng: y }`). |
+| `description` | `{String}` | The description of the store.                                |
+| `thumbnail`   | `{String}` | The URL of a image representing the store.                   |
 | `marker`      | `{Object}` | Custom icon for store markers. Accepts a [`google.maps.MarkerOptions`](https://developers.google.com/maps/documentation/javascript/reference/marker#MarkerOptions) interface object. Overrides the global marker icon if set. |
-| `description` | `{String}` | Description of the store, displayed only in map infowindow (popup) |
-| `phone`       | `{String}` | The phone number of the store                                |
-| `website`     | `{String}` | The store website                                            |
+| `phone`       | `{String}` | The phone number of the store.                               |
+| `email`       | `{String}` | The emal address of the store.                               |
+| `website`     | `{String}` | The website URL of the store.                                |
 
 
 
@@ -132,11 +136,24 @@ The `i18n` object in the options has the following properties:
 
 | Property          | Default                                                      |
 | ----------------- | ------------------------------------------------------------ |
-| `searchHint`      | `''` (optional text displayed in the sidebar, after the search box and before the list of stores) |
 | `currentLocation` | `'Current Location'`                                         |
 | `directions`      | `'Directions'`                                               |
-| `call`            | `'Call'`                                                     |
+| `phone`           | `'Call'`                                                     |
+| `email`           | `'Message'`                                                  |
 | `website`         | `'Website'`                                                  |
 | `distance`        | `'{distance}'` (`{distance}` represents the computed distance, can be customized by adding some text before or after) |
 | `byCar`           | `'by car'`                                                   |
 | `byWalk`          | `'by walk'`                                                  |
+
+
+
+## Changelog
+
+#### v1.1.0
+
+- FEATURE: added support for store thumbnails!
+- FEATURE: added support for store email addresses (even encoded ones)!
+- CHANGE: renamed class prefix to `store-locator` , and other class name changes
+- CHANGE: used [Material Design Icons](https://github.com/google/material-design-icons) in SVG format for better color customization
+- CHANGE: moved `searchHint` to global options (from `i18n.searchHint`)
+- FIX: fixed active store scroll position when marker is clicked

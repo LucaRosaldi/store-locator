@@ -51,13 +51,18 @@
       config.findUserLocation = true;
 
       /**
+       * DEMO: Insert a hint after the search box.
+       */
+      config.searchHint = 'Here is a list of the best places to visit in Rome. Be good tourists and respect the city.';
+
+      /**
        * DEMO: Language localization (italian).
        */
       config.i18n = {
-        searchHint: 'Here is a list of the best places to visit in Rome. Be good tourists and respect the city.',
         currentLocation: 'Posizione attuale',
         directions: 'Indicazioni',
-        call: 'Chiama',
+        phone: 'Chiama',
+        email: 'Messaggio',
         website: 'Sito Web',
         distance: 'distanza: {distance}',
         byCar: 'in auto',
@@ -73,17 +78,28 @@
           address: 'Piazza del Colosseo, 1, 00184 Roma RM',
           location: { lat: 41.8902142, lng: 12.4900422 },
 
+          description: 'Large 3-level Roman amphitheater with guided tours, used in ancient times for gladiator games.',
+
+          thumbnail: 'https://lh5.googleusercontent.com/p/AF1QipMobCxKz_2JmVRzzSIwjINJ-mPqyFrNEfsgvOwJ=w408-h271-k-no',
+
           // icons can be customized for a single store, overriding the global marker icon
           marker: {
             url: 'http://maps.google.com/mapfiles/ms/icons/blue.png',
             size: [ 32, 32 ]
-          }
+          },
+
+          phone: '+39 06 6982',
+          email: 'coliseum@rome.com',
+          website: 'https://www.example.com'
         },
         {
           name: 'Pantheon',
           description: 'Famous temple dating from 118 to 125 AD with a dome and renaissance tombs, including that of Raphael.',
           address: 'Piazza della Rotonda, 00186 Roma RM',
-          location: { lat: 41.8986148, lng: 12.4746842 }
+          location: { lat: 41.8986148, lng: 12.4746842 },
+
+          // supports encoded emails!
+          email: '&#112;&#097;&#110;&#116;&#104;&#101;&#111;&#110;&#064;&#101;&#120;&#097;&#109;&#112;&#108;&#101;&#046;&#099;&#111;&#109;',
         },
         {
           name: 'Basilica di San Pietro',

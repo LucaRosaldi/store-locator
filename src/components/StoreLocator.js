@@ -16,7 +16,6 @@ import promiseMap from 'p-map';
 import cx from 'classnames';
 import {getUserLocation, loadScript} from 'lib/utils';
 import {Component} from 'preact';
-
 import classNames from './StoreLocator.css';
 
 /**
@@ -48,11 +47,13 @@ class StoreLocator extends Component {
 
     stores: [],
 
+    searchHint: '',
+
     i18n: {
-      searchHint: '',
       currentLocation: 'Current Location',
       directions: 'Directions',
-      call: 'Call',
+      phone: 'Call',
+      email: 'Message',
       website: 'Website',
       distance: '{distance}',
       byCar: 'by car',
@@ -248,14 +249,30 @@ class StoreLocator extends Component {
       }
     });
 
+    const infowindow = document.createElement( 'div' );
+    infowindow.className = 'store-locator_store';
+
     let content = ``;
-    content += `<div class="${ classNames.infowindow }">`;
-    content += `<p class="${ classNames.store_name }">${ store.name }</p>`;
-    content += `<address class="${ classNames.store_address }">${ store.address }</address>`;
-    if ( store.description ) content += `<p class="${ classNames.store_description }">${ store.description }</p>`;
+
+    // text content
+    content += `<div class="store-locator_store_text">`;
+    content += `<h1 class="store-locator_store_name">${ store.name }</h1>`;
+    content += `<address class="store-locator_store_address">${ store.address }</address>`;
+    if ( store.description ) content += `<p class="store-locator_store_description">${ store.description }</p>`;
     content += `</div>`;
 
-    marker.infoWindow = new google.maps.InfoWindow( { content: content } );
+    // thumbnail
+    if ( store.thumbnail ) {
+      infowindow.className += ' has-thumbnail';
+      content += `<figure class="store-locator_store_thumbnail"><img src="${ store.thumbnail }"></figure>`;
+    }
+
+    infowindow.innerHTML = content;
+
+    marker.infoWindow = new google.maps.InfoWindow({
+      content: infowindow.outerHTML
+    });
+
     marker.storeItem = document.getElementById( `store-${ store.id }` );
 
     marker.addListener( 'click', () => {
@@ -265,10 +282,7 @@ class StoreLocator extends Component {
       this.setState( { activeStoreId: store.id } );
 
       // scroll the store list to show the active item
-      const storeItem = marker.storeItem;
-      const activeItemOffset = storeItem.offsetTop;
-      const searchBoxHeight = 70;
-      storeItem.parentElement.scrollTop = activeItemOffset - searchBoxHeight;
+      marker.storeItem.parentElement.scrollTop = marker.storeItem.offsetTop - this.navHeader.offsetHeight;
     });
 
     this.markers[ store.id ] = marker;
@@ -484,6 +498,29 @@ class StoreLocator extends Component {
   }
 
   /**
+   * Decode an encoded email address.
+   *
+   * @param  {String} email
+   * @return {String}
+   */
+  sanitizeString( str ) {
+    var element = document.createElement( 'div' );
+
+    function decodeHTMLEntities( str ) {
+      if( str && typeof str === 'string' ) {
+        str = str.replace(/<script[^>]*>([\S\s]*?)<\/script>/gmi, '');
+        str = str.replace(/<\/?\w(?:[^"'>]|"[^"]*"|'[^']*')*>/gmi, '');
+        element.innerHTML = str;
+        str = element.textContent;
+        element.textContent = '';
+      }
+      return str;
+    }
+
+    return decodeHTMLEntities( str );
+  }
+
+  /**
    * Initialize the component.
    *
    * @return {void}
@@ -495,64 +532,115 @@ class StoreLocator extends Component {
   //noinspection JSCheckFunctionSignatures
   render( { fullwidth, showStoreDistance }, { stores, activeStoreId, searchLocation } ) {
     return (
-      <div className={ cx( classNames.container, {
-        [ classNames.fullwidth ]: fullwidth,
-        [ classNames.hidedistance ]: ! showStoreDistance,
-        [ classNames.storeselected ]: activeStoreId !== null
+      <div className={ cx( 'store-locator', {
+        [ 'fullwidth' ]: fullwidth,
+        [ 'distance-is-hidden' ]: ! showStoreDistance,
+        [ 'store-is-selected' ]: activeStoreId !== null
       }) }>
-        <div className={ classNames.map } ref={ ( mapFrame ) => ( this.mapFrame = mapFrame ) } />
-        <div className={ classNames.stores }>
-          <div className={ classNames.stores_container }>
-            <div className={ classNames.stores_search }>
-              <div className={ classNames.stores_input }>
-                <input id={ classNames.searchIcon } type="text" ref={ ( input ) => ( this.input = input ) } />
-                <label for={ classNames.searchIcon }></label>
+
+        <div className='store-locator_map' ref={ ( mapFrame ) => ( this.mapFrame = mapFrame ) } />
+
+        <nav className='store-locator_nav' role='navigation'>
+          <div className='store-locator_nav_container'>
+
+            <header className='store-locator_nav_header'
+              ref={ ( navHeader ) => ( this.navHeader = navHeader ) }>
+
+              <div className='store-locator_search'>
+                <input type="search"
+                  id='store-locator-search'
+                  ref={ ( input ) => ( this.input = input ) } />
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z" fill="currentColor"/></svg>
               </div>
-            </div>
-            { this.props.i18n.searchHint && <div className={ classNames.stores_hint }>{ this.props.i18n.searchHint }</div> }
-            <ul className={ classNames.stores_list }>
+
+              { this.props.searchHint &&
+              <div className='store-locator_search_hint'>{ this.props.searchHint }</div>
+              }
+
+            </header>
+
+            <ul className='store-locator_list'>
               { stores.map( ( store ) => {
                 return (
                   <li
                     id={ `store-${ store.id }` }
                     key={ store.id }
-                    onClick={ () => this.onStoreClick( store ) }
-                    className={ cx({
-                      [classNames.activeStore]: store.id === activeStoreId,
-                      [classNames.hiddenStore]: store.hidden
+                    onClick={ () => this.onStoreClick( store ) }>
+
+                    <div className={ cx( 'store-locator_store', {
+                      [ 'is-selected' ]: store.id === activeStoreId,
+                      [ 'is-hidden' ]: store.hidden
                     }) }>
-                    <p className={ classNames.store_name }>{ store.name }</p>
-                    { this.props.showStoreDistance && store.distanceText && (
-                      <div className={ classNames.store_distance }>
-                        { store.distanceText }{ ' ' }
-                        { store.durationText && `(${store.durationText})` }
+
+                      <div className='store-locator_store_text'>
+
+                        <h1 className='store-locator_store_name'>{ store.name }</h1>
+
+                        { this.props.showStoreDistance && store.distanceText &&
+                        <small className='store-locator_store_distance'>{ store.distanceText } { store.durationText && `(${store.durationText})` }</small>
+                        }
+
+                        <address className='store-locator_store_address'>{ store.address }</address>
+
+                        { store.description &&
+                        <p className='store-locator_store_description'>{ store.description }</p>
+                        }
+
+                        <footer className='store-locator_store_actions'>
+
+                          <a href={ `${ this.getDirectionsUrl( searchLocation, store.location ) }` }
+                            className='store-locator_store_directions'
+                            target="_blank">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21.71 11.29l-9-9c-.39-.39-1.02-.39-1.41 0l-9 9c-.39.39-.39 1.02 0 1.41l9 9c.39.39 1.02.39 1.41 0l9-9c.39-.38.39-1.01 0-1.41zM14 14.5V12h-4v3H8v-4c0-.55.45-1 1-1h5V7.5l3.5 3.5-3.5 3.5z" fill="currentColor"/></svg>
+                            <span>{ this.props.i18n.directions }</span>
+                          </a>
+
+                          { store.phone &&
+                          <a href={ `tel:${store.phone}` }
+                            className='store-locator_store_phone'
+                            target="_blank">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z" fill="currentColor"/></svg>
+                            <span>{ this.props.i18n.phone }</span>
+                          </a>
+                          }
+
+                          { store.email &&
+                          <a href={ `mailto:${ this.sanitizeString( store.email )}` }
+                            className='store-locator_store_email'
+                            target="_blank">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z" fill="currentColor"/></svg>
+                            <span>{ this.props.i18n.email }</span>
+                          </a>
+                          }
+
+                          { store.website &&
+                          <a href={ store.website }
+                            className='store-locator_store_website'
+                            target="_blank">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zm6.93 6h-2.95c-.32-1.25-.78-2.45-1.38-3.56 1.84.63 3.37 1.91 4.33 3.56zM12 4.04c.83 1.2 1.48 2.53 1.91 3.96h-3.82c.43-1.43 1.08-2.76 1.91-3.96zM4.26 14C4.1 13.36 4 12.69 4 12s.1-1.36.26-2h3.38c-.08.66-.14 1.32-.14 2 0 .68.06 1.34.14 2H4.26zm.82 2h2.95c.32 1.25.78 2.45 1.38 3.56-1.84-.63-3.37-1.9-4.33-3.56zm2.95-8H5.08c.96-1.66 2.49-2.93 4.33-3.56C8.81 5.55 8.35 6.75 8.03 8zM12 19.96c-.83-1.2-1.48-2.53-1.91-3.96h3.82c-.43 1.43-1.08 2.76-1.91 3.96zM14.34 14H9.66c-.09-.66-.16-1.32-.16-2 0-.68.07-1.35.16-2h4.68c.09.65.16 1.32.16 2 0 .68-.07 1.34-.16 2zm.25 5.56c.6-1.11 1.06-2.31 1.38-3.56h2.95c-.96 1.65-2.49 2.93-4.33 3.56zM16.36 14c.08-.66.14-1.32.14-2 0-.68-.06-1.34-.14-2h3.38c.16.64.26 1.31.26 2s-.1 1.36-.26 2h-3.38z" fill="currentColor"/></svg>
+                            <span>{ this.props.i18n.website }</span>
+                          </a>
+                          }
+
+                        </footer>
+
                       </div>
-                    )}
-                    <address className={ classNames.store_address }>{ store.address }</address>
-                    <div className={ classNames.store_actions } onClick={ ( e ) => e.stopPropagation() }>
-                      <a target="_blank" href={ `${ this.getDirectionsUrl( searchLocation, store.location ) }` }>
-                        <span className={ `${ classNames.store_actions_icon } ${ classNames.store_actions_directions }` }></span>
-                        <span>{ this.props.i18n.directions }</span>
-                      </a>{' '}
-                      { store.phone && (
-                        <a target="_blank" href={ `tel:${store.phone}` }>
-                          <span className={ `${ classNames.store_actions_icon } ${ classNames.store_actions_phone }` }></span>
-                          <span>{ this.props.i18n.call }</span>
-                        </a>
-                      ) }
-                      { store.website && (
-                        <a target="_blank" href={ store.website }>
-                          <span className={ `${ classNames.store_actions_icon } ${ classNames.store_actions_website }` }></span>
-                          <span>{ this.props.i18n.website }</span>
-                        </a>
-                      ) }
+
+                      { store.thumbnail &&
+                      <figure className='store-locator_store_thumbnail'>
+                        <img src={ store.thumbnail } />
+                      </figure>
+                      }
+
                     </div>
                   </li>
                 );
               })}
             </ul>
+
           </div>
-        </div>
+        </nav>
+
       </div>
     );
   }
