@@ -125,9 +125,9 @@ Each store object has the following properties:
 | `summary`     | `{String}` | Short description if the store, displayed in the stores list. |
 | `description` | `{String}` | Full description of the store, displayed in the map when marker is clicked. |
 | `thumbnail`   | `{String}` | The URL of a image representing the store.                   |
-| `marker`      | `{Object}` | Custom icon for store markers. Accepts a [`google.maps.MarkerOptions`](https://developers.google.com/maps/documentation/javascript/reference/marker#MarkerOptions) interface object. Overrides the global marker icon if set. |
+| `marker`      | `{Object}` | Custom icon for store markers. Accepts a [`google.maps.MarkerOptions`](https://developers.google.com/maps/documentation/javascript/reference/marker#MarkerOptions) interface object. Overrides the global marker icon. |
 | `phone`       | `{String}` | The phone number of the store.                               |
-| `email`       | `{String}` | The emal address of the store.                               |
+| `email`       | `{String}` | The email address of the store.                              |
 | `website`     | `{String}` | The website URL of the store.                                |
 
 
