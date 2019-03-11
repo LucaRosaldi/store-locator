@@ -151,6 +151,11 @@ The `i18n` object in the options has the following properties:
 
 ## Changelog
 
+#### v1.1.1
+
+- CHANGE: added `summary` option for store
+- FIX: fixed layout issue with thumbnail in the store list
+
 #### v1.1.0
 
 - FEATURE: added support for store thumbnails!

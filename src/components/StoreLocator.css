@@ -333,12 +333,11 @@
     }
 
     /**
-     * @element      Store Locator List Store
-     * @description  Thumbnail of store inside the store navigator list.
+     * @element      Store Locator List Store Image
+     * @description  Thumbnail image of store inside the store navigator list.
      */
-    .store-locator_list .store-locator_store_thumbnail {
-      min-width: 80px;
-      max-width: 80px;
+    .store-locator_list .store-locator_store_thumbnail img {
+      width: 80px;
     }
 
 
