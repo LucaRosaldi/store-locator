@@ -64,7 +64,8 @@ Responsive Google Maps Store locator build in [Preact](https://preactjs.com/) an
           name: 'Coliseum',
           address: 'Piazza del Colosseo, 1, 00184 Roma RM',
           location: { lat: 41.8902142, lng: 12.4900422 },
-          description: 'Optional description displayed in infowindow.',
+          summary: 'Text displayed in the stores list.'
+          description: 'Text displayed in the map when a marker is clicked.',
           phone: '+39 1234567',
           email: 'email@example.com',
           website: 'https://coliseum.com'
@@ -121,7 +122,8 @@ Each store object has the following properties:
 | `name`        | `{String}` | *(required)* The name of the store.                          |
 | `address`     | `{String}` | *(required)* The address of the store.                       |
 | `location`    | `{Object}` | *(required)* The store coordinates ([`LatLngLiteral`](https://developers.google.com/maps/documentation/javascript/reference/coordinates#LatLngLiteral), `{ lat: x, lng: y }`). |
-| `description` | `{String}` | The description of the store.                                |
+| `summary`     | `{String}` | Short description if the store, displayed in the stores list. |
+| `description` | `{String}` | Full description of the store, displayed in the map when marker is clicked. |
 | `thumbnail`   | `{String}` | The URL of a image representing the store.                   |
 | `marker`      | `{Object}` | Custom icon for store markers. Accepts a [`google.maps.MarkerOptions`](https://developers.google.com/maps/documentation/javascript/reference/marker#MarkerOptions) interface object. Overrides the global marker icon if set. |
 | `phone`       | `{String}` | The phone number of the store.                               |
@@ -141,7 +143,7 @@ The `i18n` object in the options has the following properties:
 | `phone`           | `'Call'`                                                     |
 | `email`           | `'Message'`                                                  |
 | `website`         | `'Website'`                                                  |
-| `distance`        | `'{distance}'` (`{distance}` represents the computed distance, can be customized by adding some text before or after) |
+| `distance`        | `'{{distance}}'` (`{{distance}}` represents the computed distance, can be customized by adding text before or after, i.e. `{{distance}} away`) |
 | `byCar`           | `'by car'`                                                   |
 | `byWalk`          | `'by walk'`                                                  |
 

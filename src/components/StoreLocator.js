@@ -582,8 +582,8 @@ class StoreLocator extends Component {
 
                         <address className='store-locator_store_address'>{ store.address }</address>
 
-                        { store.description &&
-                        <p className='store-locator_store_description'>{ store.description }</p>
+                        { store.summary &&
+                        <p className='store-locator_store_description'>{ store.summary }</p>
                         }
 
                         <footer className='store-locator_store_actions'>
