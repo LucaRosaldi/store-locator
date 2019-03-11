@@ -157,3 +157,10 @@ The `i18n` object in the options has the following properties:
 - CHANGE: used [Material Design Icons](https://github.com/google/material-design-icons) in SVG format for better color customization
 - CHANGE: moved `searchHint` to global options (from `i18n.searchHint`)
 - FIX: fixed active store scroll position when marker is clicked
+
+
+
+## Roadmap
+
+- Add support for getting current location on-demand
+- Add support for identifying stores without using LatLng using the [Places API](https://developers.google.com/maps/documentation/javascript/places#TextSearchRequests).
