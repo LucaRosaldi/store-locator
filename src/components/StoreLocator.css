@@ -114,6 +114,7 @@
  */
 .store-locator_store_actions {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   margin-top: 0.5rem;
   font-size: 0.875em;
@@ -336,7 +337,7 @@
      * @description  Thumbnail of store inside the store navigator list.
      */
     .store-locator_list .store-locator_store_thumbnail {
-      width: 80px;
+      min-width: 80px;
     }
 
 
