@@ -338,6 +338,7 @@
      */
     .store-locator_list .store-locator_store_thumbnail {
       min-width: 80px;
+      max-width: 80px;
     }
 
 
