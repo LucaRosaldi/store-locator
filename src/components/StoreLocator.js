@@ -55,7 +55,7 @@ class StoreLocator extends Component {
       phone: 'Call',
       email: 'Message',
       website: 'Website',
-      distance: '{distance}',
+      distance: '{{distance}}',
       byCar: 'by car',
       byWalk: 'by walk',
     },
@@ -354,12 +354,12 @@ class StoreLocator extends Component {
           if (route.status !== 'OK') return resolve( directDistance );
 
           const i18nProp = ( this.props.travelMode === 'DRIVING' ) ? 'byCar' : 'byWalk';
-          const distanceText = this.props.i18n.distance.replace( '{distance}', route.distance.text );
+          const distanceText = this.props.i18n.distance.replace( '{{distance}}', route.distance.text );
           const durationText = `${route.duration.text} ${this.props.i18n[ i18nProp ]}`;
 
           resolve({
             distance: route.distance.value,
-            distanceText: this.props.i18n.distance.replace( '{distance}', route.distance.text ),
+            distanceText: distanceText,
             durationText: durationText
           });
 
