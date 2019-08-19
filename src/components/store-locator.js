@@ -40,13 +40,13 @@ class StoreLocator extends Component {
     stores: [],
 
     searchHint: '',
-    searchRadius: 15,
+    searchRadius: 30,
     showStoreDistance: true,
 
     i18n: {
       showPosition: 'Show your position',
       yourPosition: 'Your position',
-      noResults: 'There are no results in the selected area.',
+      noResults: 'There are no results in the selected area',
       getDirections: 'Get directions',
       callPhoneNumber: 'Call phone number',
       sendEmail: 'Send email',
@@ -563,11 +563,11 @@ class StoreLocator extends Component {
   /**
    * Update the map location from a query string.
    *
-   * @param  {String|Object} Address string or Location literal
+   * @param  {Object} coords Location object literal
    * @return {void}
    */
-  updateLocationByCoordinates( location ) {
-    this.geocoder.geocode( { location: location }, ( results, status ) => {
+  updateLocationByCoordinates( coords ) {
+    this.geocoder.geocode( { location: coords }, ( results, status ) => {
       if ( status === 'OK' && results[0] ) this.updateLocation( results[0] );
     });
   }
@@ -575,7 +575,7 @@ class StoreLocator extends Component {
   /**
    * Update the map location from a query string.
    *
-   * @param  {String|Object} Address string or Location literal
+   * @param  {String} address
    * @return {void}
    */
   updateLocationByAddress( address ) {
@@ -590,14 +590,14 @@ class StoreLocator extends Component {
    * @param  {Object} location Coordinates { lat: x, lng: y }
    * @return {void}
    */
-  updateStores( location ) {
+  updateStores( coords ) {
 
     const bounds = new google.maps.LatLngBounds();
-    bounds.extend( location );
+    bounds.extend( coords );
 
     // sort stores by distance
     const stores = this.props.stores.map( ( store ) => {
-      store.computedDistance = this.getComputedDistance( location, store.location, 'K' );
+      store.computedDistance = this.getComputedDistance( coords, store.location, 'K' );
       return store;
     }).sort( ( a, b ) => a.computedDistance - b.computedDistance );
 
@@ -618,7 +618,7 @@ class StoreLocator extends Component {
     // calculate distance with Google Distance Matrix
     if ( this.state.showStoreDistance && results.length > 0 ) {
       promiseMap( results, ( store ) => {
-        return this.getDistanceMatrix( location, store.location ).then( ( distance ) => {
+        return this.getDistanceMatrix( coords, store.location ).then( ( distance ) => {
           Object.assign( store, distance );
           return store;
         });
