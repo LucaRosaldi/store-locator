@@ -89,27 +89,26 @@ Responsive Google Maps Store locator build in [Preact](https://preactjs.com/) an
 
 The configuration object accepts the following properties.
 
-| Property                | Default     | Description                                                  |
-| ----------------------- | ----------- | ------------------------------------------------------------ |
-| `container`             | `null`      | *(required)* The DOM element where the map will be rendered. |
-| `stores`                | `[]`        | *(required)* List of store objects (see chapter "Store").    |
-| `searchHint`            | `''`        | Message to display below the search box.                     |
-| `fullwidth`             | `false`     | Make the map expand to the full width of the container on large screens, and show the store list as an overlay. |
-| `center`                | `{}`        | Initial map center ([`LatLngLiteral`](https://developers.google.com/maps/documentation/javascript/reference/coordinates#LatLngLiteral), `{ lat: x, lng: y }`). Not required, but recommended (as default is Italy :–D). |
-| `address`               | `''`        | Set the address in the search box to use as the initial location. Overrides the `center` prop. |
-| `findUserLocation`      | `true`      | Determine the current location of the user on map initialization (if user allows geolocation in her browser). Overrides the `address` prop. |
-| `marker`                | `{}`        | Custom icon for store markers. Accepts a [`google.maps.MarkerOptions`](https://developers.google.com/maps/documentation/javascript/reference/marker#MarkerOptions) interface object. |
-| `style`                 | `[]`        | Map style (see [Google Map Style Wizard](https://mapstyle.withgoogle.com/) or [Snazzy Maps](https://snazzymaps.com/) for styling options). |
-| `unitSystem`            | `'METRIC'`  | Mode used to calculate the distance between points in the map (`'METRIC'` {Km} or `'IMPERIAL'` {Mi}). |
-| `travelMode`            | `'DRIVING'` | Mode used to calculate the time between points in the map (`'WALKING'` or `'DRIVING'`). |
-| `zoom`                  | `6`         | Initial map zoom.                                            |
-| `zoomSelection`         | `17`        | Map zoom when a store is selected.                           |
-| `showStoreDistance`     | `true`      | Show the distance to each store from the chosen location.    |
-| `nearestStores`         | `1`         | After searching for a location, resize the map to show the closest `N` results from the location. With the value of `1`, it shows the nearest store. To skip resizing altoghether, set the value to `0`. |
-| `fartherStoresOpacity`  | `1.00`      | Opacity value for the markers of the farthest stores (the ones not included in the value above). This can be lowered to "mute" or hide the stores that are far from the current location. |
-| `showStreetViewControl` | `true`      | Show the Street View icon in the map.                        |
-| `showTerrainControl`    | `false`     | Show the terrain type switcher in the map.                   |
-| `i18n`                  | `{}`        | Collection of strings for internationalization (see chapter "Internationalization"). |
+| Property               | Default     | Description                                                  |
+| ---------------------- | ----------- | ------------------------------------------------------------ |
+| `container`            | `null`      | *(required)* The DOM element where the map will be rendered. |
+| `stores`               | `[]`        | *(required)* List of store objects (see chapter "Store").    |
+| `searchHint`           | `''`        | Message to display below the search box.                     |
+| `searchRadius`         | `30`        | The radius in Km or Miles (depending on the currently set unit system) within which to display stores when a new location is chosen. |
+| `showStoreDistance`    | `true`      | Show the distance to each store when a new location is chosen. |
+| `i18n`                 | `{}`        | Collection of strings for internationalization (see chapter "Internationalization"). |
+| `mapAddress`           | `''`        | Set the address in the search box to use as the initial location. |
+| `mapCenter`            | `{}`        | *(required)* Initial map center ([`LatLngLiteral`](https://developers.google.com/maps/documentation/javascript/reference/coordinates#LatLngLiteral), `{ lat: x, lng: y }`). |
+| `mapFullWidth`         | `false`     | Make the map expand to the full width of the container on large screens, and show the store list as an overlay. |
+| `mapMarkerIcon`        | `{}`        | Custom icon for store markers. Accepts a [`google.maps.MarkerOptions`](https://developers.google.com/maps/documentation/javascript/reference/marker#MarkerOptions) interface object. |
+| `mapStreetViewControl` | `true`      | Show the Street View icon in the map.                        |
+| `mapStyle`             | `[]`        | Map style (see [Google Map Style Wizard](https://mapstyle.withgoogle.com/) or [Snazzy Maps](https://snazzymaps.com/) for styling options). |
+| `mapTerrainControl`    | `false`     | Show the terrain type switcher in the map.                   |
+| `mapTravelMode`        | `'DRIVING'` | Mode used to calculate the time between points in the map (`'WALKING'` or `'DRIVING'`). |
+| `mapUnitSystem`        | `'METRIC'`  | Mode used to calculate the distance between points in the map (`'METRIC'` {Km} or `'IMPERIAL'` {Mi}). |
+| `mapZoom`              | `6`         | Initial map zoom.                                            |
+| `onMapInit`            | `null`      | Hook which is called after the map initialization. The function is passed the `map` object. |
+| `onPlaceChange`        | `null`      | Hook which is called after the search input has changed. The function is passed the `place` object. |
 
 
 
@@ -122,13 +121,15 @@ Each store object has the following properties:
 | `name`        | `{String}` | *(required)* The name of the store.                          |
 | `address`     | `{String}` | *(required)* The address of the store.                       |
 | `location`    | `{Object}` | *(required)* The store coordinates ([`LatLngLiteral`](https://developers.google.com/maps/documentation/javascript/reference/coordinates#LatLngLiteral), `{ lat: x, lng: y }`). |
-| `summary`     | `{String}` | Short description if the store, displayed in the stores list. |
-| `description` | `{String}` | Full description of the store, displayed in the map when marker is clicked. |
-| `thumbnail`   | `{String}` | The URL of a image representing the store.                   |
 | `marker`      | `{Object}` | Custom icon for store markers. Accepts a [`google.maps.MarkerOptions`](https://developers.google.com/maps/documentation/javascript/reference/marker#MarkerOptions) interface object. Overrides the global marker icon. |
-| `phone`       | `{String}` | The phone number of the store.                               |
-| `email`       | `{String}` | The email address of the store.                              |
-| `website`     | `{String}` | The website URL of the store.                                |
+| `thumbnail`   | `{String}` | The URL of a image representing the store. Displayed both in the stores listing and in the marker infowindow <sup>[1]</sup>. |
+| `summary`     | `{String}` | Short description of the store. Displayed in the stores listing <sup>[1]</sup>. |
+| `description` | `{String}` | Full description of the store. Displayed in the marker infowindow <sup>[1]</sup>. |
+| `phone`       | `{String}` | The phone number of the store. Displayed in the marker infowindow <sup>[1]</sup>. |
+| `email`       | `{String}` | The email address of the store. Displayed in the marker infowindow <sup>[1]</sup>. |
+| `website`     | `{String}` | The website URL of the store. Displayed in the marker infowindow <sup>[1]</sup>. |
+
+<sup>[1]</sup> The store info are outputted *both* in the listing item *and* in the infowindow. For optimal UX, some of these info are then hidden *with CSS* on the listing, and some other on the infowindow. If you want to change this, you can do so by simply overriding the styles.
 
 
 
@@ -138,18 +139,26 @@ The `i18n` object in the options has the following properties:
 
 | Property          | Default                                                      |
 | ----------------- | ------------------------------------------------------------ |
-| `currentLocation` | `'Current Location'`                                         |
-| `directions`      | `'Directions'`                                               |
-| `phone`           | `'Call'`                                                     |
-| `email`           | `'Message'`                                                  |
-| `website`         | `'Website'`                                                  |
-| `distance`        | `'{{distance}}'` (`{{distance}}` represents the computed distance, can be customized by adding text before or after, i.e. `{{distance}} away`) |
+| `showPosition`    | `'Show your position'`                                       |
+| `yourPosition`    | `'Your position'`                                            |
+| `noResults`       | `'There are no results in the selected area'`                |
+| `getDirections`   | `'Get directions'`                                           |
+| `callPhoneNumber` | `'Call phone number'`                                        |
+| `sendEmail`       | `'Send email'`                                               |
+| `openWebsite`     | `'Open website'`                                             |
+| `distanceText`    | `'{{distance}}'` (`{{distance}}` represents the computed distance, can be customized by adding text before or after, i.e. `{{distance}} away`) |
 | `byCar`           | `'by car'`                                                   |
 | `byWalk`          | `'by walk'`                                                  |
 
 
 
 ## Changelog
+
+#### v2.0.0
+
+- CHANGE: completely refactored to minimize the number of API requests (now the DistanceMatrix API is called only on stores within the radius of the searched location)
+- CHANGE: changed some option names
+- CHANGE: changed almost all js function names and css class names for better readability
 
 #### v1.1.1
 
@@ -169,5 +178,5 @@ The `i18n` object in the options has the following properties:
 
 ## Roadmap
 
-- Add support for getting current location on-demand
 - Add support for identifying stores without using LatLng using the [Places API](https://developers.google.com/maps/documentation/javascript/places#TextSearchRequests).
+- [DONE] dd support for getting current location on-demand
