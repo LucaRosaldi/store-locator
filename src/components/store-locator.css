@@ -17,10 +17,19 @@
  * @description  The store locator wrapper.
  */
 .store-locator {
+
+  --sl-color: inherit;
+  --sl-background: #fff;
+  --sl-background-selected: #f5f5f5;
+  --sl-border-color: #e6e6e6;
+  --sl-button-color: #4285f4;
+
   display: flex;
   flex-direction: column;
+
   position: relative;
   overflow: hidden;
+
   height: 100%;
 }
   .store-locator * {
@@ -35,19 +44,32 @@
   display: flex;
   align-items: stretch;
 }
+.store-locator_list .store-locator_store {
+  position: relative;
+  transition: all 0.2s ease;
+}
+.store-locator_list .store-locator_store.is-selected {
+  background-color: #f5f5f5;
+  background-color: var(--sl-background-selected);
+}
+.store-locator_map .store-locator_store {
+}
 
 /**
  * @element      Store Locator Store Text
- * @description  The text of the store.
+ * @description  The container for the store text.
  */
 .store-locator_store_text {
   flex-grow: 1;
   margin: 1rem;
 }
+.store-locator_list .store-locator_store_text {
+  margin-left: 1.5rem;
+}
 
 /**
  * @element      Store Locator Store Thumbnail
- * @description  The thumbnail of the store.
+ * @description  The container for the store thumbnail.
  */
 .store-locator_store_thumbnail {
   margin: 1rem;
@@ -59,6 +81,13 @@
     object-fit: cover;
     object-position: center;
   }
+.store-locator_list .store-locator_store_thumbnail {
+  width: 80px;
+  height: 92px;
+}
+.store-locator_map .store-locator_store_thumbnail {
+  margin: 0.5rem 0 0.5rem 0.5rem;
+}
 
 /**
  * @element      Store Locator Store Name
@@ -71,6 +100,22 @@
 }
 
 /**
+ * @element      Store Locator Store Summary
+ * @description  The summary of the store.
+ */
+.store-locator_store_summary {
+  margin: 0.5rem 0 0;
+  font-size: 0.875em;
+}
+.store-locator_list .store-locator_store_summary {
+  margin-top: 0.25rem;
+  opacity: 0.7;
+}
+.store-locator_map .store-locator_store_summary {
+  display: none;
+}
+
+/**
  * @element      Store Locator Store Address
  * @description  The address of the store.
  */
@@ -79,20 +124,29 @@
   font-size: 0.9375em;
   font-style: normal;
 }
+.store-locator_list .store-locator_store_address {
+}
+.store-locator_map .store-locator_store_address {
+  display: none;
+}
 
 /**
- * @element      Store Locator Store Description
+ * @element      Store Locator Store description
  * @description  The description of the store.
  */
 .store-locator_store_description {
   margin: 0.5rem 0 0;
   font-size: 0.875em;
-  opacity: 0.75;
+}
+.store-locator_list .store-locator_store_description {
+  display: none;
+}
+.store-locator_map .store-locator_store_description {
 }
 
 /**
  * @element      Store Locator Store Distance
- * @description  The distance of the store from the current location (below the store name).
+ * @description  The text which displays the distance of the store from the current location.
  */
 .store-locator_store_distance {
   display: block;
@@ -116,10 +170,18 @@
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  margin-top: 0.5rem;
   font-size: 0.875em;
+  margin-top: 1rem;
 
   pointer-events: none;  /* [1] */
+}
+.store-locator_list .store-locator_store_actions {
+  display: none;
+  margin-left: -0.25rem;
+}
+.store-locator_map .store-locator_store_actions {
+  flex-direction: column;
+  align-items: flex-start;
 }
 
   /**
@@ -130,13 +192,47 @@
    */
   .store-locator_store_actions a {
     display: inline-flex;
+    position: relative;
     align-items: center;
-    margin-right: 1rem;
+    padding: 0.25rem;
     text-decoration: none;
     color: inherit;
-    transition: color 0.2s ease;
+    transition: all 0.2s ease;
+    white-space: nowrap;
 
     pointer-events: auto;  /* [1] */
+  }
+  .store-locator_store_actions a:hover {
+    z-index: 2;
+  }
+  .store-locator_list .store-locator_store_actions a::after {
+    content: attr(title);
+    position: absolute;
+    top: 50%; left: 100%;
+    transform: translateY( -50% );
+
+    margin: 0 0.25em;
+    padding: 0.25em 0.5em;
+
+    white-space: nowrap;
+
+    background-color: #4285f4;
+    background-color: var(--sl-button-color);
+    color: #fff;
+    color: var(--sl-background);
+
+    border-radius: 4px;
+
+    opacity: 0;
+    transition: all 0.1s linear;
+
+    pointer-events: none;
+  }
+  .store-locator_list .store-locator_store_actions a:hover::after {
+    opacity: 1;
+  }
+  .store-locator_map .store-locator_store_actions a {
+    padding-left: 0;
   }
 
   /**
@@ -146,9 +242,22 @@
   .store-locator_store_actions svg {
     width: 1.5em;
     height: 1.5em;
-    margin-right: 0.15rem;
+
     color: #4285f4;
-    transition: fill 0.2s ease;
+    color: var(--sl-button-color);
+
+    transition: all 0.15s ease;
+  }
+
+  /**
+   * @element      Store Locator Store Actions Text
+   * @description  The text for the store action.
+   */
+  .store-locator_store_actions span {
+    margin-left: 0.25em;
+  }
+  .store-locator_list .store-locator_store_actions span {
+    display: none;
   }
 
 /**
@@ -157,6 +266,10 @@
  */
 .store-locator_map {
   flex: 1;
+
+  position: relative;
+  z-index: 1;
+
   height: 100%;
   min-height: 300px;
 }
@@ -180,23 +293,22 @@
     margin: 0.5rem 0 0.5rem 0.5rem;
   }
 
-  /**
-   * @element      Store Locator Map Store Thumbnail
-   * @description  Thumbnail of store inside the map infowindow.
-   */
-  .store-locator_map .store-locator_store .store-locator_store_thumbnail {
-    margin: 0.5rem 0 0.5rem 0.5rem;
-  }
-
 /**
  * @element      Store Locator Nav
  * @description  The wrapper for the store navigation.
  */
 .store-locator_nav {
   position: relative;
+  z-index: 2;
+
   width: 100%;
   min-height: 300px;
+
   background: #fff;
+  background: var(--sl-background);
+  color: inherit;
+  color: var(--sl-color);
+
   box-shadow: 0 0 8px rgba( 0, 0, 0, 0.3 );
 }
 
@@ -210,27 +322,43 @@
     width: 100%;
     height: 100%;
     max-height: 300px;
+    overflow: hidden;
   }
 
-  /**
-   * @element      Store Locator Nav Header
-   * @description  The store navigation header.
-   */
-  .store-locator_nav_header {
-    position: relative;
-    z-index: 2;
-    width: 100%;
-    padding: 1rem 0.75rem;
-  }
+    /**
+     * @element      Store Locator Nav Header
+     * @description  The store navigation header.
+     */
+    .store-locator_nav_header {
+      position: relative;
+      z-index: 2;
+
+      width: 100%;
+      padding: 1rem 0.75rem;
+
+      border-bottom: 1px solid #e6e6e6;
+      border-bottom: 1px solid var(--sl-border-color);
+    }
+
+    /**
+     * @element      Store Locator Nav Search
+     * @description  The search bar inside the store navigation.
+     */
+    .store-locator_nav_search {
+      display: flex;
+      position: relative;
+      z-index: 2;
+      width: 100%;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.2), 0 -1px 0px rgba(0,0,0,0.02);
+    }
 
   /**
    * @element      Store Locator Search
    * @description  The search bar.
    */
   .store-locator_search {
+    flex-grow: 1;
     position: relative;
-    background: #fff;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.2), 0 -1px 0px rgba(0,0,0,0.02);
   }
 
     /**
@@ -240,11 +368,12 @@
     .store-locator_search input {
       width: 100%;
       height: 3em;
-      padding: 0 2.5rem 0 0.75rem;
+      padding: 0 2.25rem 0 0.75rem;
 
       font-size: 1em;
       line-height: 3em;
 
+      background: transparent;
       border: 0;
       outline: none;
     }
@@ -270,19 +399,76 @@
      * @description  The text below the search bar.
      */
     .store-locator_search_hint {
+      width: 100%;
       margin: 1rem 0 0;
       font-size: 0.875em;
       opacity: 0.75;
     }
+
+  .store-locator_nav_button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    position: relative;
+
+    font-size: 1em;
+    width: 3em;
+    height: 3em;
+
+    background: transparent;
+    border: 0;
+    color: inherit;
+
+    appearance: none;
+    cursor: pointer;
+
+  }
+  .store-locator.no-geolocation .store-locator_nav_button {
+    display: none;
+  }
+
+    .store-locator_nav_button svg {
+      width: 1.5em;
+      height: 1.5em;
+      opacity: 0.38;
+      transition: all 0.15s ease;
+    }
+    .store-locator_nav_button:hover svg {
+      color: #4285f4;
+      color: var(--sl-button-color);
+      opacity: 1;
+    }
+    .store-locator_nav_button:before {
+      content: "";
+      position: absolute;
+      top: 0.75em; bottom: 0.75em;
+      left: 0;
+      width: 1px;
+
+      background-color: #e6e6e6;
+      background-color: var(--sl-border-color);
+    }
+
+  /**
+   * @element      Store Locator Nav Empty
+   * @description  Container for the text displayed where there are no results.
+   */
+  .store-locator_nav_empty {
+    font-size: 1.25em;
+    opacity: 0.5;
+    padding: 1.5rem;
+  }
 
   /**
    * @element      Store Locator List
    * @description  The list of all stores.
    */
   .store-locator_list {
-    list-style: none;
     margin: 0;
     padding: 0;
+
+    list-style: none;
 
     overflow-y: auto;
 
@@ -293,7 +479,7 @@
     width: 6px;
   }
   .store-locator_list::-webkit-scrollbar-thumb {
-    background: rgba( 0, 0, 0, 0.42 );;
+    background: rgba( 0, 0, 0, 0.42 );
   }
   .store-locator_list::-webkit-scrollbar-track {
     background: rgba( 0, 0, 0, 0.12 );
@@ -304,41 +490,8 @@
      * @description  Item inside the store navigator list.
      */
     .store-locator_list li {
-      border-top: 1px solid rgba( 0, 0, 0, 0.12 );
-      cursor: pointer;
-    }
-
-    /**
-     * @element      Store Locator List Store
-     * @description  Store inside the store navigator list.
-     */
-    .store-locator_list .store-locator_store {
-      position: relative;
-      transition: all 0.2s ease;
-    }
-    .store-locator_list .store-locator_store.is-hidden {
-      opacity: 0.75;
-    }
-    .store-locator_list .store-locator_store.is-selected {
-      background: rgba( 0, 0, 0, 0.025 );
-      opacity: 1;
-    }
-
-    /**
-     * @element      Store Locator List Store Text
-     * @description  Text of store inside the store navigator list.
-     */
-    .store-locator_list .store-locator_store_text {
-      margin-left: 1.5rem;
-    }
-
-    /**
-     * @element      Store Locator List Store Image
-     * @description  Thumbnail image of store inside the store navigator list.
-     */
-    .store-locator_list .store-locator_store_thumbnail {
-      min-width: 80px;
-      max-width: 80px;
+      border-bottom: 1px solid #e6e6e6;
+      border-bottom: 1px solid var(--sl-border-color);
     }
 
 @media (min-width: 750px) {
@@ -368,7 +521,7 @@
    * @modifier     Store Locator Fullwidth Nav
    * @description  The wrapper for the store navigation when in full width mode.
    */
-  .store-locator.fullwidth .store-locator_nav {
+  .store-locator.is-fullwidth .store-locator_nav {
     position: absolute;
     top: 2rem; left: 2rem;
     bottom: 2rem; right: 2rem;

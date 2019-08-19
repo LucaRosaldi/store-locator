@@ -1,10 +1,10 @@
 {
   "name": "store-locator",
-  "version": "1.1.1",
+  "version": "2.0.0",
   "description": "Responsive Google Maps Store locator build in Preact featuring interactive stores list, user geolocation, search box with autocomplete, custom map styles, custom markers and internationalization.",
   "main": "dist/store-locator.js",
   "scripts": {
-    "start": "babel-node $(npm bin)/webpack-dev-server --inline --env.dev",
+    "start": "babel-node $(npm bin)/webpack-dev-server --env.dev",
     "lint": "eslint --format 'node_modules/eslint-friendly-formatter' src --fix",
     "build": "babel-node $(npm bin)/webpack --env.prod",
     "test": "echo \"Error: no test specified\" && exit 1",

@@ -7,10 +7,10 @@ export default options => {
     context: path.resolve(__dirname, 'src'),
     entry: './index.js',
     output: {
-      library: 'storeLocator',
+      library: 'StoreLocator',
       path: path.resolve(__dirname, 'dist'),
       publicPath: '/',
-      filename: 'store-locator.js'
+      filename: 'store-locator.pkgd.js'
     },
     plugins: [
       new webpack.LoaderOptionsPlugin({
@@ -24,7 +24,7 @@ export default options => {
         }
       }),
       new ExtractTextPlugin({
-        filename: 'store-locator.css',
+        filename: 'store-locator.pkgd.css',
         allChunks: true
       }),
       new webpack.ProvidePlugin({

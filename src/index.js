@@ -1,5 +1,5 @@
 import {render} from 'preact';
-import StoreLocator from 'components/StoreLocator';
+import StoreLocator from 'components/store-locator';
 
 module.exports = function( { container, stores, ...config } ) {
   const storesWithIds = stores.map( ( store, i ) => {
@@ -7,4 +7,5 @@ module.exports = function( { container, stores, ...config } ) {
     return store;
   });
   render( <StoreLocator { ...config } stores={ storesWithIds } />, container );
+  return StoreLocator;
 };
