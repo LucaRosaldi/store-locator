@@ -179,4 +179,5 @@ The `i18n` object in the options has the following properties:
 ## Roadmap
 
 - Add support for identifying stores without using LatLng using the [Places API](https://developers.google.com/maps/documentation/javascript/places#TextSearchRequests).
-- [DONE] dd support for getting current location on-demand
+- [DONE] Added support for getting current location on-demand
+
