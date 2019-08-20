@@ -42,6 +42,7 @@ class StoreLocator extends Component {
     searchHint: '',
     searchRadius: 30,
     showStoreDistance: true,
+    orderByStoreDistance: true,
 
     i18n: {
       showPosition: 'Show your position',
@@ -596,11 +597,16 @@ class StoreLocator extends Component {
     const bounds = new google.maps.LatLngBounds();
     bounds.extend( coords );
 
-    // sort stores by distance
+    // calculate stores distance
     const stores = this.props.stores.map( ( store ) => {
       store.computedDistance = this.getComputedDistance( coords, store.location, 'K' );
       return store;
-    }).sort( ( a, b ) => a.computedDistance - b.computedDistance );
+    });
+
+    // sort stores by distance
+    if ( this.props.orderByStoreDistance ) {
+      stores.sort( ( a, b ) => a.computedDistance - b.computedDistance );
+    }
 
     // filter stores based on search radius
     const searchRadius = this.getSearchRadius();
@@ -624,8 +630,10 @@ class StoreLocator extends Component {
           return store;
         });
       }).then( ( stores ) => {
-        stores.sort( ( a, b ) => a.distance - b.distance );
         this.setState( { stores: stores } );
+        if ( this.props.orderByStoreDistance ) {
+          stores.sort( ( a, b ) => a.distance - b.distance );
+        }
       });
     }
   }

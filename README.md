@@ -95,7 +95,8 @@ The configuration object accepts the following properties.
 | `stores`               | `[]`        | *(required)* List of store objects (see chapter "Store").    |
 | `searchHint`           | `''`        | Message to display below the search box.                     |
 | `searchRadius`         | `30`        | The radius in Km or Miles (depending on the currently set unit system) within which to display stores when a new location is chosen. |
-| `showStoreDistance`    | `true`      | Show the distance to each store when a new location is chosen. |
+| `showStoreDistance`    | `true`      | Show the distance from each store to the chosen location.    |
+| `orderByStoreDistance` | `true`      | Order stores by distance to the chosen location.             |
 | `i18n`                 | `{}`        | Collection of strings for internationalization (see chapter "Internationalization"). |
 | `mapAddress`           | `''`        | Set the address in the search box to use as the initial location. |
 | `mapCenter`            | `{}`        | *(required)* Initial map center ([`LatLngLiteral`](https://developers.google.com/maps/documentation/javascript/reference/coordinates#LatLngLiteral), `{ lat: x, lng: y }`). |
