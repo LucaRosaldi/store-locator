@@ -508,8 +508,9 @@ class StoreLocator extends Component {
     // reset map when search input is cleared
     this.input.addEventListener( 'search', () => {
       if ( this.input.value === '' ) {
-        this.clearCurrentPositionMarker();
         this.setState( { stores: this.props.stores } );
+        this.closeInfoWindows();
+        this.clearCurrentPositionMarker();
         this.map.setCenter( this.props.mapCenter );
         this.map.setZoom( this.props.mapZoom );
       }
