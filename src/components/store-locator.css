@@ -60,7 +60,11 @@
  * @description  The container for the store text.
  */
 .store-locator_store_text {
-  flex-grow: 1;
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+
   margin: 1rem;
 }
 .store-locator_list .store-locator_store_text {
@@ -72,6 +76,7 @@
  * @description  The container for the store thumbnail.
  */
 .store-locator_store_thumbnail {
+  flex: 0 0 auto;
   margin: 1rem;
   text-align: center;
 }
@@ -198,12 +203,14 @@
     text-decoration: none;
     color: inherit;
     transition: all 0.2s ease;
-    white-space: nowrap;
 
     pointer-events: auto;  /* [1] */
   }
   .store-locator_store_actions a:hover {
     z-index: 2;
+  }
+  .store-locator_list .store-locator_store_actions a {
+    white-space: nowrap;
   }
   .store-locator_list .store-locator_store_actions a::after {
     content: attr(title);
