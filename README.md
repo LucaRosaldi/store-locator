@@ -41,19 +41,19 @@ Responsive Google Maps Store locator build in [Preact](https://preactjs.com/) an
 
 ```html
 <html>
-  
+
   <head>
     <link href="store-locator.css" rel="stylesheet">
   </head>
 
   <body>
-  
+
     <div id="my-store-locator"></div>
 
     <script src="store-locator.js"></script>
     <script>
     (function(){
-      
+
       var config = {};
 
       config.container = document.getElementById( 'my-store-locator' );
@@ -74,7 +74,7 @@ Responsive Google Maps Store locator build in [Preact](https://preactjs.com/) an
       ];
 
       storeLocator( config );
-    
+
     })();
     </script>
 
@@ -154,6 +154,15 @@ The `i18n` object in the options has the following properties:
 
 
 ## Changelog
+
+#### v2.2.0
+
+- FEATURE: added support for filters!
+
+#### v2.1.0
+
+- FEATURE: added option to order stores by distance to the searched location
+– FIX: various style fixes
 
 #### v2.0.0
 
