@@ -91,9 +91,3 @@ export function sanitizeString( str ) {
 
   return decodeHTMLEntities( str );
 }
-
-export default function() {
-  return {
-    isFunction: isFunction
-  }
-}
