@@ -31,6 +31,20 @@ export function getUserLocation() {
 }
 
 /**
+ * Check if user is on a slow connection (i.e. 2g).
+ *
+ * @return {Boolean}
+ */
+export function isUserOnSlowConnection() {
+  return new Promise( ( resolve, reject ) => {
+    if ( ! navigator.connection ) return reject( 'no connection info available' );
+    navigator.connection.addEventListener( 'change', () => {
+      resolve( navigator.connection.rtt > 500 || navigator.connection.effectiveType.includes( '2g' ) );
+    });
+  });
+}
+
+/**
  * Inject a script in the page asynchronously.
  *
  * @param  {string} src
