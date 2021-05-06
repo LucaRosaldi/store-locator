@@ -15,7 +15,7 @@ export function isFunction( func ) {
  */
 export function getUserLocation() {
   return new Promise( ( resolve, reject ) => {
-    if (!navigator.geolocation) return reject('no geolocation support');
+    if ( ! navigator.geolocation ) return reject( 'no geolocation support' );
     navigator.geolocation.getCurrentPosition(
       p => {
         resolve({
