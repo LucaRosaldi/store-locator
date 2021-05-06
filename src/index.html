@@ -50,6 +50,7 @@
           address: 'P.zza del Duomo, 20122 Milano MI',
           location: { lat: 45.464135, lng: 9.191927 },
           summary: 'Catholic Church',
+          tags: [ 'church' ],
           description: 'The construction of this magnificent cathedral, one of the largest in the world, took more than 600 years.',
           thumbnail: 'https://lh5.googleusercontent.com/p/AF1QipPq86K-rFksAwzjw7gQNQ3MNQbsfNH8ZQ7SuVfV=w408-h306-k-no',
           phone: '+39 02 7202 3375',
@@ -60,6 +61,7 @@
           address: 'P.zza Guglielmo II, 1, 90046 Monreale PA',
           location: { lat: 38.082114, lng: 13.292366 },
           summary: 'Cathedral',
+          tags: [ 'church' ],
           description: 'Famous Norman cathedral known for its decorated cloisters and bright golden mosaics with biblical stories.',
           thumbnail: 'https://lh5.googleusercontent.com/p/AF1QipPb3asEREStNw_-96pgQr4I4tFLhHgQJuph2Z0a=w408-h306-k-no',
           phone: '+39 091 640 4413'
@@ -69,6 +71,7 @@
           address: 'Ponte Vecchio, 50125 Firenze FI',
           location: { lat: 43.767938, lng: 11.253123 },
           summary: 'Bridge',
+          tags: [ 'bridge' ],
           description: 'Picturesque arched bridge over the river, of Roman origin, lined with jewelers and souvenir shops.',
           thumbnail: 'https://lh5.googleusercontent.com/proxy/H50ytJI_0zdK4sguYEnSjafzyN9Eb9TClmPLOqWtODpfmd9GlTUgleE65gOUGEyVfZ9S6hFRjOfmrl3j5uTUaZr5ZyLqqhglbzn9W1Mm6dgm2y1I5aSv5U6Kvf7HdEVpacA9kxJ05K7gOypeZqqDBYDL_Nf69r8=w408-h272-k-no'
         },
@@ -77,6 +80,7 @@
           address: 'P.zza del Colosseo, 1, 00184 Roma RM',
           location: { lat: 41.890214, lng: 12.490042 },
           summary: 'Famous arena of Roman gladiators',
+          tags: [ 'arena' ],
           description: 'Large 3-level Roman amphitheater with guided tours, used in ancient times for gladiator games.',
           thumbnail: 'https://lh5.googleusercontent.com/p/AF1QipMobCxKz_2JmVRzzSIwjINJ-mPqyFrNEfsgvOwJ=w408-h271-k-no',
           phone: '+39 06 6982',
@@ -87,35 +91,63 @@
           name: 'Basilica di San Pietro',
           address: "Piazza San Pietro, 00120 Città del Vaticano",
           location: { lat: 41.9021707, lng: 12.451748 },
+          tags: [ 'church' ],
           phone: '+39 06 6982',
           email: 'me@example.com'
         },
         {
           name: "Fontana di Trevi",
           address: 'Piazza di Trevi, 00187 Roma RM',
-          location: { lat: 41.899362, lng: 12.48073 }
+          location: { lat: 41.899362, lng: 12.48073 },
+          tags: [ 'fountain' ]
         },
         {
           name: 'Pantheon',
           description: 'Celebre tempio databile dal 118 al 125 d.C. con cupola e tombe rinascimentali, inclusa quella di Raffaello.',
           address: 'Piazza della Rotonda, 00186 Roma RM',
-          location: { lat: 41.8986694, lng: 12.4418536 }
+          location: { lat: 41.8986694, lng: 12.4418536 },
+          tags: [ 'church' ]
         },
         {
           name: 'Cappella Sistina',
           description: 'Famosa cappella all’interno dei Musei Vaticani, famosa per il soffitto dipinto da Michelangelo nel XVI secolo.',
           address: '00120 Città del Vaticano',
-          location: { lat: 41.9029508, lng: 12.4522948 }
+          location: { lat: 41.9029508, lng: 12.4522948 },
+          tags: [ 'church' ]
         },
         {
           name: 'Torre di Pisa',
           address: 'P.zza del Duomo, 56126 Pisa PI',
           location: { lat: 43.722963, lng: 10.396607 },
+          tags: [ 'tower' ],
           summary: 'Tower',
           description: 'Famous leaning tower from the 14th century with elaborate decorations, 56 meters high.',
           thumbnail: 'https://lh5.googleusercontent.com/proxy/5HwtFLr0a1M5UIffbekMlPbAQj68QYErWAAO2Nh3NMClypuxbsGcMovGWJ-LbEK6nyFDKHKlm6flsTfvsjixc38jybeqwJ3CiGJLeVugjW-ON4yA5MGN84mMPx_fPGvyEI8ViQC5qsafbLBCxl9QitIt3jHuGQ=w408-h272-k-no',
           phone: '+39 050 835011',
           website: 'https://www.opapisa.it/'
+        }
+      ];
+
+      config.filters = [
+        {
+          tag: 'arena',
+          label: 'Arenas'
+        },
+        {
+          tag: 'bridge',
+          label: 'Bridges'
+        },
+        {
+          tag: 'church',
+          label: 'Churches'
+        },
+        {
+          tag: 'fountain',
+          label: 'Fountains'
+        },
+        {
+          tag: 'tower',
+          label: 'Towers'
         }
       ];
 

@@ -38,6 +38,7 @@ class StoreLocator extends Component {
   static defaultProps = {
 
     stores: [],
+    filters: [],
 
     searchHint: '',
     searchRadius: 30,
@@ -45,16 +46,17 @@ class StoreLocator extends Component {
     orderByStoreDistance: true,
 
     i18n: {
-      showPosition: 'Show your position',
-      yourPosition: 'Your position',
-      noResults: 'There are no results in the selected area',
-      getDirections: 'Get directions',
-      callPhoneNumber: 'Call phone number',
-      sendEmail: 'Send email',
-      openWebsite: 'Open website',
-      distanceText: '{{distance}}',
       byCar: 'by car',
       byWalk: 'by walk',
+      callPhoneNumber: 'Call phone number',
+      distanceText: '{{distance}}',
+      filtersHeaderText: 'Show:',
+      getDirections: 'Get directions',
+      noResults: 'There are no results in the selected area',
+      openWebsite: 'Open website',
+      sendEmail: 'Send email',
+      showPosition: 'Show your position',
+      yourPosition: 'Your position',
     },
 
     mapAddress: '',
@@ -72,7 +74,7 @@ class StoreLocator extends Component {
     mapZoom: 6,
 
     onMapInit: function( map ){},
-    onPlaceChange: function( place ){},
+    onPlaceChange: function( place ){}
 
   };
 
@@ -89,8 +91,14 @@ class StoreLocator extends Component {
       store.storeId = store.id
     });
 
+    // get all filters tags as an array
+    const activeFilters = props.filters.map( ( filter ) => {
+      return filter.tag;
+    });
+
     this.state = {
       activeStoreId: null,
+      activeFilters: activeFilters,
       searchLocation: null,
       searchRadius: props.searchRadius,
       showStoreDistance: props.showStoreDistance,
@@ -442,6 +450,50 @@ class StoreLocator extends Component {
   }
 
   /**
+   * Handle clicks on filters.
+   *
+   * @return {void}
+   */
+  handleFilterClick( filter ) {
+
+    // update the active filters
+    const activeFilters = this.state.activeFilters;
+    const filterInput = document.querySelector( `#filter-${ filter.tag } input` );
+
+    if ( filterInput.checked && ! activeFilters.includes( filter.tag ) ) {
+      activeFilters.push( filter.tag );
+    }
+    else if ( ! filterInput.checked && activeFilters.includes( filter.tag ) ) {
+      const i = activeFilters.indexOf( filter.tag );
+      activeFilters.splice( i, 1 );
+    }
+
+    this.setState( { activeFilters: activeFilters } );
+
+    // update the stores listing
+    const results = this.props.stores.filter( ( store ) => {
+      let includes = false;
+      activeFilters.forEach( ( tag ) => {
+        if ( store.tags.includes( tag ) ) {
+          includes = true;
+        }
+      });
+      return includes;
+    });
+
+    this.setState( { stores: results } );
+
+    // hide/show markers for visible stores
+    const visibleStoresIds = results.map( ( store ) => store.storeId );
+
+    this.markers.forEach( ( marker ) => {
+      ( ! visibleStoresIds.includes( marker.storeId ) )
+        ? marker.setMap( null )
+        : marker.setMap( this.map );
+    });
+  }
+
+  /**
    * Initialize button for getting current location.
    *
    * @return {void}
@@ -639,7 +691,18 @@ class StoreLocator extends Component {
   }
 
   //noinspection JSCheckFunctionSignatures
-  render( { mapFullWidth }, { stores, activeStoreId, showStoreDistance, searchLocation } ) {
+  render(
+    {
+      mapFullWidth,
+      filters
+    },
+    {
+    stores,
+    activeStoreId,
+    activeFilters,
+    showStoreDistance,
+    searchLocation
+  }) {
     return (
       <div className={ cx( 'store-locator', {
         [ 'is-fullwidth' ]: mapFullWidth,
@@ -648,6 +711,27 @@ class StoreLocator extends Component {
       }) }>
 
         <div className='store-locator_map' ref={ ( mapFrame ) => ( this.mapFrame = mapFrame ) } />
+
+        { filters.length &&
+        <div className='store-locator_filters'>
+          <header className='store-locator_filters_header'>{ this.props.i18n.filtersHeaderText }</header>
+          <ul className='store-locator_filters_list'>
+            { filters.map( ( filter ) => {
+              return (
+                <li className='store-locator_filters_list-item'
+                    id={ `filter-${ filter.tag }` }>
+                  <label className='store-locator_filter'
+                         key={ filter.tag }
+                         onClick={ () => this.handleFilterClick( filter ) }>
+                    <input type="checkbox" name={ filter.tag } defaultChecked="true"></input>
+                    <span className='store-locator_filter_label'>{filter.label}</span>
+                  </label>
+                </li>
+              );
+            })}
+          </ul>
+        </div>
+        }
 
         <nav className='store-locator_nav' role='navigation'>
           <div className='store-locator_nav_container'>

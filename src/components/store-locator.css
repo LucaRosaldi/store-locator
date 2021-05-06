@@ -268,6 +268,51 @@
   }
 
 /**
+ * @element      Store Locator Filters
+ * @description  The filters wrapper.
+ */
+.store-locator_filters {
+  position: absolute;
+  top: 0; right: 0;
+  z-index: 2;
+
+  min-width: 200px;
+  margin: 1rem;
+
+  background: var(--sl-background);
+}
+
+  /**
+   * @element      Store Locator Filters
+   * @description  The filters wrapper.
+   */
+  .store-locator_filters_header {
+    padding: 1rem;
+
+    background: var(--sl-background-selected);
+
+    font-weight: bold;
+  }
+
+  /**
+   * @element      Store Locator Filters
+   * @description  The filters wrapper.
+   */
+  .store-locator_filters_list {
+    margin: 0;
+    padding: 1rem;
+    list-style: none;
+  }
+
+  /**
+   * @element      Store Locator Filters
+   * @description  The filters wrapper.
+   */
+  .store-locator_filters_list-item {
+    padding: 0.25rem 0;
+  }
+
+/**
  * @element      Store Locator Map
  * @description  The map wrapper.
  */
