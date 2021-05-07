@@ -471,11 +471,20 @@ class StoreLocator extends Component {
     }
 
     this.setState( { activeFilters: activeFilters } );
+    this.applyActiveFilters();
+  }
+
+  /**
+   * Apply all active filters.
+   *
+   * @return {void}
+   */
+  applyActiveFilters() {
 
     // update the stores listing
     const results = this.state.stores.map( ( store ) => {
       let hidden = true;
-      activeFilters.forEach( ( tag ) => {
+      this.state.activeFilters.forEach( ( tag ) => {
         if ( store.tags.includes( tag ) ) {
           hidden = false;
         }
@@ -487,12 +496,12 @@ class StoreLocator extends Component {
     this.setState( { stores: results } );
 
     // hide/show markers for visible stores
-    const visibleStoresIds = results.map( ( store ) => {
-      if ( ! store.hidden ) return store.storeId;
+    const hiddenStoresIds = results.map( ( store ) => {
+      if ( store.hidden ) return store.storeId;
     });
 
     this.markers.forEach( ( marker ) => {
-      ( ! visibleStoresIds.includes( marker.storeId ) )
+      ( hiddenStoresIds.includes( marker.storeId ) )
         ? marker.setMap( null )
         : marker.setMap( this.map );
     });
@@ -678,6 +687,9 @@ class StoreLocator extends Component {
 
     // update the stores listing
     this.setState( { stores: results } );
+
+    // apply active filters
+    this.applyActiveFilters();
 
     // calculate distance with Google Distance Matrix
     if ( this.state.showStoreDistance && results.length > 0 ) {
