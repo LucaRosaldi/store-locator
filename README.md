@@ -155,6 +155,10 @@ The `i18n` object in the options has the following properties:
 
 ## Changelog
 
+#### v2.2.2
+
+- FIX: fixed issue for when filters are not applied when changing locations.
+
 #### v2.2.1
 
 - FIX: fixed issue for when a filter is disabled and reenabled, it shows all the stores in the listing unregarding of location

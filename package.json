@@ -1,6 +1,6 @@
 {
   "name": "store-locator",
-  "version": "2.2.1",
+  "version": "2.2.2",
   "description": "Responsive Google Maps Store locator build in Preact featuring interactive stores list, user geolocation, search box with autocomplete, custom map styles, custom markers and internationalization.",
   "main": "dist/store-locator.js",
   "scripts": {
