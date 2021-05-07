@@ -456,6 +456,8 @@ class StoreLocator extends Component {
    */
   handleFilterClick( filter ) {
 
+    this.closeInfoWindows();
+
     // update the active filters
     const activeFilters = this.state.activeFilters;
     const filterInput = document.querySelector( `#filter-${ filter.tag } input` );
@@ -471,20 +473,23 @@ class StoreLocator extends Component {
     this.setState( { activeFilters: activeFilters } );
 
     // update the stores listing
-    const results = this.props.stores.filter( ( store ) => {
-      let includes = false;
+    const results = this.state.stores.map( ( store ) => {
+      let hidden = true;
       activeFilters.forEach( ( tag ) => {
         if ( store.tags.includes( tag ) ) {
-          includes = true;
+          hidden = false;
         }
       });
-      return includes;
+      store.hidden = hidden;
+      return store;
     });
 
     this.setState( { stores: results } );
 
     // hide/show markers for visible stores
-    const visibleStoresIds = results.map( ( store ) => store.storeId );
+    const visibleStoresIds = results.map( ( store ) => {
+      if ( ! store.hidden ) return store.storeId;
+    });
 
     this.markers.forEach( ( marker ) => {
       ( ! visibleStoresIds.includes( marker.storeId ) )
@@ -772,10 +777,12 @@ class StoreLocator extends Component {
             <ul className='store-locator_list'>
               { stores.map( ( store ) => {
                 return (
-                  <li
-                    id={ `store-${ store.id }` }
-                    key={ store.id }
-                    onClick={ () => this.handleStoreClick( store ) }>
+                  <li className={ cx( 'store-locator_item', {
+                        [ 'is-hidden' ]: store.hidden === true
+                      }) }
+                      id={ `store-${ store.id }` }
+                      key={ store.id }
+                      onClick={ () => this.handleStoreClick( store ) }>
 
                     <div className={ cx( 'store-locator_store', {
                       [ 'is-selected' ]: store.id === activeStoreId

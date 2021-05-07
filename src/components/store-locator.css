@@ -48,6 +48,9 @@
   position: relative;
   transition: all 0.2s ease;
 }
+.store-locator_list .store-locator_item.is-hidden {
+  display: none;
+}
 .store-locator_list .store-locator_store.is-selected {
   background-color: #f5f5f5;
   background-color: var(--sl-background-selected);
