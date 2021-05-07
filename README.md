@@ -155,9 +155,13 @@ The `i18n` object in the options has the following properties:
 
 ## Changelog
 
+#### v2.2.3
+
+- CHANGE: Moved filters inside the main navigation and added a toggle for showing and hiding them
+
 #### v2.2.2
 
-- FIX: fixed issue for when filters are not applied when changing locations.
+- FIX: fixed issue for when filters are not applied when changing locations
 
 #### v2.2.1
 
