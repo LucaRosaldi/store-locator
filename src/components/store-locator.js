@@ -50,7 +50,7 @@ class StoreLocator extends Component {
       byWalk: 'by walk',
       callPhoneNumber: 'Call phone number',
       distanceText: '{{distance}}',
-      filtersHeaderText: 'Show:',
+      filtersHeaderText: 'Filters',
       getDirections: 'Get directions',
       noResults: 'There are no results in the selected area',
       openWebsite: 'Open website',
@@ -729,27 +729,6 @@ class StoreLocator extends Component {
 
         <div className='store-locator_map' ref={ ( mapFrame ) => ( this.mapFrame = mapFrame ) } />
 
-        { filters.length &&
-        <div className='store-locator_filters'>
-          <header className='store-locator_filters_header'>{ this.props.i18n.filtersHeaderText }</header>
-          <ul className='store-locator_filters_list'>
-            { filters.map( ( filter ) => {
-              return (
-                <li className='store-locator_filters_list-item'
-                    id={ `filter-${ filter.tag }` }>
-                  <label className='store-locator_filter'
-                         key={ filter.tag }
-                         onClick={ () => this.handleFilterClick( filter ) }>
-                    <input type="checkbox" name={ filter.tag } defaultChecked="true"></input>
-                    <span className='store-locator_filter_label'>{filter.label}</span>
-                  </label>
-                </li>
-              );
-            })}
-          </ul>
-        </div>
-        }
-
         <nav className='store-locator_nav' role='navigation'>
           <div className='store-locator_nav_container'>
 
@@ -781,6 +760,31 @@ class StoreLocator extends Component {
               }
 
             </header>
+
+            { filters.length &&
+            <div className='store-locator_filters'>
+              <input className='store-locator_filters_toggle' id="sl-show-filters" type="checkbox" defaultChecked="true"></input>
+              <label className='store-locator_filters_header' for="sl-show-filters">
+                <span>{ this.props.i18n.filtersHeaderText }</span>
+                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M4 8L12 16L20 8"/></svg>
+              </label>
+              <ul className='store-locator_filters_list'>
+                { filters.map( ( filter ) => {
+                  return (
+                    <li className='store-locator_filters_item'
+                        id={ `filter-${ filter.tag }` }>
+                      <label className='store-locator_filter'
+                             key={ filter.tag }
+                             onClick={ () => this.handleFilterClick( filter ) }>
+                        <input type="checkbox" name={ filter.tag } defaultChecked="true"></input>
+                        <span className='store-locator_filter_label'>{filter.label}</span>
+                      </label>
+                    </li>
+                  );
+                })}
+              </ul>
+            </div>
+            }
 
             { stores.length === 0 &&
             <div className='store-locator_nav_empty'>{ this.props.i18n.noResults }</div>
