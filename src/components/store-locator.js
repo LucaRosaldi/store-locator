@@ -65,6 +65,7 @@ class StoreLocator extends Component {
       lng: 12.3959168
     },
     mapFullWidth: false,
+    mapLanguage: '',
     mapMarkerIcon: null,
     mapStreetViewControl: true,
     mapStyle: [],
@@ -210,9 +211,9 @@ class StoreLocator extends Component {
    */
   loadGoogleMaps() {
     if ( window.google && window.google.maps ) return Promise.resolve();
-    return loadScript(
-      `https://maps.googleapis.com/maps/api/js?key=${this.props.apiKey}&libraries=geometry,places`
-    );
+    var src = `https://maps.googleapis.com/maps/api/js?key=${this.props.apiKey}&libraries=geometry,places`;
+    if ( this.props.mapLanguage.length > 0 ) src = src + `&language=${this.props.mapLanguage}`;
+    return loadScript( src );
   }
 
   /**
