@@ -101,6 +101,7 @@ The configuration object accepts the following properties.
 | `mapAddress`           | `''`        | Set the address in the search box to use as the initial location. |
 | `mapCenter`            | `{}`        | *(required)* Initial map center ([`LatLngLiteral`](https://developers.google.com/maps/documentation/javascript/reference/coordinates#LatLngLiteral), `{ lat: x, lng: y }`). |
 | `mapFullWidth`         | `false`     | Make the map expand to the full width of the container on large screens, and show the store list as an overlay. |
+| `mapLanguage`          | `''`        | Set the map language to a specific locale (i.e. 'en_US'). Default is the browser language. |
 | `mapMarkerIcon`        | `{}`        | Custom icon for store markers. Accepts a [`google.maps.MarkerOptions`](https://developers.google.com/maps/documentation/javascript/reference/marker#MarkerOptions) interface object. |
 | `mapStreetViewControl` | `true`      | Show the Street View icon in the map.                        |
 | `mapStyle`             | `[]`        | Map style (see [Google Map Style Wizard](https://mapstyle.withgoogle.com/) or [Snazzy Maps](https://snazzymaps.com/) for styling options). |
@@ -155,7 +156,11 @@ The `i18n` object in the options has the following properties:
 
 ## Changelog
 
-#### v2.2.3
+#### v2.3.1
+
+- FEATURE: added option to set map language to a specific locale
+
+####v2.2.3
 
 - CHANGE: Moved filters inside the main navigation and added a toggle for showing and hiding them
 
