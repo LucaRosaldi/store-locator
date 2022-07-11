@@ -482,6 +482,8 @@ class StoreLocator extends Component {
    */
   applyActiveFilters() {
 
+    if ( this.state.activeFilters.length < 1 ) return;
+
     // update the stores listing
     const results = this.state.stores.map( ( store ) => {
       let hidden = true;
@@ -762,7 +764,7 @@ class StoreLocator extends Component {
 
             </header>
 
-            { filters.length &&
+            { this.props.filters.length > 0 &&
             <div className='store-locator_filters'>
               <input className='store-locator_filters_toggle' id="sl-show-filters" type="checkbox" defaultChecked="true"></input>
               <label className='store-locator_filters_header' for="sl-show-filters">
