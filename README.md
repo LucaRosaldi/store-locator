@@ -156,6 +156,10 @@ The `i18n` object in the options has the following properties:
 
 ## Changelog
 
+#### v2.3.2
+
+- FIX: fixed issue with filters breaking search functionality when no filters are defined
+
 #### v2.3.1
 
 - FEATURE: added option to set map language to a specific locale
